@@ -1,0 +1,6 @@
+<Project>
+	<PropertyGroup>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	</PropertyGroup>
+</Project>
