@@ -9,4 +9,5 @@
 *.orig
 *.tmp
 *.temp
+*.suo
 _ReSharper*.*
