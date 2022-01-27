@@ -1,30 +1,33 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Duality.Utilities;
+using Microsoft.Xna.Framework;
 
 namespace Duality
 {
-    /// <summary>
-    /// Responsible for stepping through the game's logic and rendering loops.
-    /// </summary>
     public class GameDriver
         : Game
     {
-        public Color BackgroundColor;
-        public IGraphicsDeviceManager GraphicsDeviceManager;
+        public GraphicsDeviceManager Graphics;
+
+        protected override void Initialize()
+        {
+            Graphics.PreferredBackBufferWidth = 1280;
+            Graphics.PreferredBackBufferHeight = 720;
+            Graphics.ApplyChanges();
+        }
 
         protected override void Update(GameTime gameTime)
         {
-            var keyboard = Keyboard.GetState();
-            if (keyboard.IsKeyDown(Keys.Escape))
-                Exit();
-
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(BackgroundColor);
             base.Draw(gameTime);
+        }
+
+        public GameDriver()
+        {
+            
         }
     }
 }

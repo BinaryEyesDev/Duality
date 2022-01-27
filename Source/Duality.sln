@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Duality", "Projects\Duality\Duality.csproj", "{80805578-D675-473B-B32D-0D7FCF9852DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Duality", "Projects\Duality\Duality.csproj", "{591B16B0-7042-4F60-9079-D3B80AD1F758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,17 +18,17 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Debug|x64.Build.0 = Debug|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Debug|x86.Build.0 = Debug|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Release|x64.ActiveCfg = Release|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Release|x64.Build.0 = Release|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Release|x86.ActiveCfg = Release|Any CPU
-		{80805578-D675-473B-B32D-0D7FCF9852DD}.Release|x86.Build.0 = Release|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Debug|x64.Build.0 = Debug|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Debug|x86.Build.0 = Debug|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Release|x64.ActiveCfg = Release|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Release|x64.Build.0 = Release|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Release|x86.ActiveCfg = Release|Any CPU
+		{591B16B0-7042-4F60-9079-D3B80AD1F758}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
