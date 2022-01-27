@@ -1,0 +1,12 @@
+[Aa]ssets
+[Bb]in
+[Oo]bj
+[Tt]emp
+[Tt]arget
+
+.vs
+*.user
+*.orig
+*.tmp
+*.temp
+_ReSharper*.*
