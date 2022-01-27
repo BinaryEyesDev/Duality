@@ -9,6 +9,7 @@ namespace Duality
     public class GameDriver
         : Game
     {
+        public Color BackgroundColor;
         public IGraphicsDeviceManager GraphicsDeviceManager;
 
         protected override void Update(GameTime gameTime)
@@ -22,6 +23,7 @@ namespace Duality
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(BackgroundColor);
             base.Draw(gameTime);
         }
     }

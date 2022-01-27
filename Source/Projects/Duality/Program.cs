@@ -20,6 +20,7 @@ namespace Duality
             Log.Message("GeneratingGameDriver");
             using (var driver = new GameDriver())
             {
+                driver.BackgroundColor = Color.CornflowerBlue;
                 driver.GraphicsDeviceManager = GenerateGraphicsDeviceManager(driver);
                 driver.Run();
             }
