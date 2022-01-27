@@ -29,9 +29,10 @@ namespace Duality
                 driver.SpriteBatch = GenerateSpriteBatch.Perform(driver);
                 driver.DefaultFont = GenerateDefaultFont.Perform(driver);
                 driver.FramerateDisplay = GenerateFramerateDisplay.Perform(driver);
-                driver.MainCamera = GenerateMainCamera.Perform();
+                driver.MainCamera = GenerateMainCamera.Perform(driver);
                 driver.Sprite = GenerateSprite.Perform(driver, "Tiles/WaterTile_5");
 
+                driver.UpdateSystems = GenerateUpdateSystems.Perform();
                 driver.Window.Title = $"Duality {GameVersion.Get()}";
                 driver.Run();
             }

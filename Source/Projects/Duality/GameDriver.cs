@@ -1,4 +1,5 @@
-﻿using Duality.Components;
+﻿using System.Collections.Generic;
+using Duality.Components;
 using Duality.Extensions;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
@@ -18,6 +19,8 @@ namespace Duality
         public Camera2D MainCamera;
         public Sprite Sprite;
 
+        public List<GameSystem> UpdateSystems;
+
         protected override void Initialize()
         {
             ResizeGraphicsManager.Perform(Graphics);
@@ -29,7 +32,8 @@ namespace Duality
             if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
-            MainCamera.Update(GraphicsDevice.Viewport);
+            for (var i = 0; i < UpdateSystems.Count; i++)
+                UpdateSystems[i].Perform(this, gameTime);
 
             FramerateDisplay.HandleUpdateComplete(gameTime);
             base.Update(gameTime);
