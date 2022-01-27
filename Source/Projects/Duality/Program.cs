@@ -22,12 +22,14 @@ namespace Duality
                 {
                     IsMouseVisible = true,
                     BackgroundColor = Color.CornflowerBlue,
-                    Content = { RootDirectory = "Content" },
+                    Content = {RootDirectory = "Content"},
                 };
 
                 driver.Graphics = GenerateGraphicsManager.Perform(driver);
                 driver.SpriteBatch = GenerateSpriteBatch.Perform(driver);
-                driver.Effect = GenerateBasicEffect.Perform(driver);
+                driver.DefaultFont = GenerateDefaultFont.Perform(driver);
+                driver.FramerateDisplay = GenerateFramerateDisplay.Perform(driver);
+                driver.MainCamera = GenerateMainCamera.Perform();
                 driver.Sprite = GenerateSprite.Perform(driver, "Tiles/WaterTile_5");
 
                 driver.Window.Title = $"Duality {GameVersion.Get()}";

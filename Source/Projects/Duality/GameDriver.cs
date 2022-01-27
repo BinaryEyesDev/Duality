@@ -13,7 +13,9 @@ namespace Duality
         public Color BackgroundColor;
         public GraphicsDeviceManager Graphics;
         public SpriteBatch SpriteBatch;
-        public BasicEffect Effect;
+        public SpriteFont DefaultFont;
+        public FramerateDisplay FramerateDisplay;
+        public Camera2D MainCamera;
         public Sprite Sprite;
 
         protected override void Initialize()
@@ -27,6 +29,9 @@ namespace Duality
             if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
+            MainCamera.Update(GraphicsDevice.Viewport);
+
+            FramerateDisplay.HandleUpdateComplete(gameTime);
             base.Update(gameTime);
         }
 
@@ -40,12 +45,13 @@ namespace Duality
                 DepthStencilState.Default,
                 RasterizerState.CullCounterClockwise,
                 null, 
-                Matrix.Identity);
-                
+                MainCamera.Transformation);
 
             SpriteBatch.DrawSprite(Sprite);
 
             SpriteBatch.End();
+
+            FramerateDisplay.HandleDrawComplete();
             base.Draw(gameTime);
         }
     }
