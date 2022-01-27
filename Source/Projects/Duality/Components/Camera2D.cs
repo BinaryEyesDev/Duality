@@ -6,6 +6,7 @@ namespace Duality.Components
     public class Camera2D
     {
         public Transform2D Transform = Transform2D.Identity;
+        public float FollowSpeed;
         public Viewport Viewport;
         public Matrix Transformation;
         public float ZoomFactor => Transform.Scale.X;

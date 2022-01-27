@@ -12,6 +12,7 @@ namespace Duality.Utilities
             return new List<GameSystem>
             {
                 new MovePlayerWithKeyboard(),
+                new CameraTrackTarget(),
                 new UpdateCameraTransformation(),
             };
         }

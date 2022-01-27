@@ -11,6 +11,7 @@ namespace Duality.Utilities
             Log.Message("GeneratingMainCamera");
             var camera = new Camera2D
             {
+                FollowSpeed = 5.0f,
                 Viewport = driver.GraphicsDevice.Viewport,
                 Transformation = Matrix.Identity
             };
