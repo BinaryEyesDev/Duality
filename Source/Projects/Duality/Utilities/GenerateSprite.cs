@@ -14,17 +14,20 @@ namespace Duality.Utilities
             try
             {
                 var texture = driver.Content.Load<Texture2D>(texturePath);
-                return new Sprite
+                var sprite = new Sprite
                 {
+                    IsEnabled = true,
                     Image = texture,
                     Size = texture.GetSize(),
                     Pivot = new Vector2(0.5f, 0.5f),
                     Frame = null,
                     Tint = Color.White,
                     Effects = SpriteEffects.None,
-                    ZIndex = 0.5f
+                    ZIndex = 0.5f,
                 };
 
+                driver.Sprites.Add(sprite);
+                return sprite;
             }
             catch (Exception e)
             {

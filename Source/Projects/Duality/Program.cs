@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using Duality.Components;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 using Orca.Logging.Windows;
 
@@ -30,7 +31,13 @@ namespace Duality
                 driver.DefaultFont = GenerateDefaultFont.Perform(driver);
                 driver.FramerateDisplay = GenerateFramerateDisplay.Perform(driver);
                 driver.MainCamera = GenerateMainCamera.Perform(driver);
-                driver.Sprite = GenerateSprite.Perform(driver, "Tiles/WaterTile_5");
+                driver.Sprites = new List<Sprite>();
+
+                GenerateSprite.Perform(driver, "Tiles/WaterTile_5").Transform.Position = new Vector2(0.0f, 0.0f);
+                GenerateSprite.Perform(driver, "Tiles/WaterTile_5").Transform.Position = new Vector2(0.0f, 32.0f);
+                GenerateSprite.Perform(driver, "Tiles/WaterTile_5").Transform.Position = new Vector2(32.0f, 0.0f);
+                GenerateSprite.Perform(driver, "Tiles/WaterTile_5").Transform.Position = new Vector2(0.0f, -32.0f);
+                driver.Player = GeneratePlayer.Perform(driver);
 
                 driver.UpdateSystems = GenerateUpdateSystems.Perform();
                 driver.Window.Title = $"Duality {GameVersion.Get()}";

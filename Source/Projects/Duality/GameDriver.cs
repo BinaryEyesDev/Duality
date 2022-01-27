@@ -17,7 +17,8 @@ namespace Duality
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
         public Camera2D MainCamera;
-        public Sprite Sprite;
+        public Player Player;
+        public List<Sprite> Sprites;
 
         public List<GameSystem> UpdateSystems;
 
@@ -51,7 +52,11 @@ namespace Duality
                 null, 
                 MainCamera.Transformation);
 
-            SpriteBatch.DrawSprite(Sprite);
+            for (var i = 0; i < Sprites.Count; i++)
+            {
+                if (Sprites[i].IsEnabled)
+                    SpriteBatch.DrawSprite(Sprites[i]);
+            }
 
             SpriteBatch.End();
 
