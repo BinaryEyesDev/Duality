@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Duality.Components;
+using Duality.Editing;
 using Duality.Extensions;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
@@ -21,6 +22,7 @@ namespace Duality
         public List<Sprite> Sprites;
 
         public List<GameSystem> UpdateSystems;
+        public GameEditor Editor;
 
         protected override void Initialize()
         {
@@ -37,6 +39,7 @@ namespace Duality
                 UpdateSystems[i].Perform(this, gameTime);
 
             FramerateDisplay.HandleUpdateComplete(gameTime);
+            Editor.Update(this, gameTime);
             base.Update(gameTime);
         }
 
@@ -61,6 +64,7 @@ namespace Duality
             SpriteBatch.End();
 
             FramerateDisplay.HandleDrawComplete();
+            Editor.Draw(this, gameTime);
             base.Draw(gameTime);
         }
     }

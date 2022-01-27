@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Duality.Components;
+using Duality.Editing.Utilities;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
 using Orca.Logging;
@@ -41,6 +42,8 @@ namespace Duality
 
                 driver.UpdateSystems = GenerateUpdateSystems.Perform();
                 driver.Window.Title = $"Duality {GameVersion.Get()}";
+
+                driver.Editor = GenerateGameEditor.Perform(driver);
                 driver.Run();
             }
             catch (Exception e)
