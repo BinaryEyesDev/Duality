@@ -1,5 +1,7 @@
-﻿using Duality.Utilities;
+﻿using System;
+using Duality.Utilities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 using Orca.Logging.Windows;
 
@@ -14,17 +16,28 @@ namespace Duality
             Log.Message($"Duality v{GameVersion.Get()}");
             Log.Message("Developed By: Amir & Skye Barak");
 
-            using var driver = new GameDriver
+            try
             {
-                IsMouseVisible = true,
-                BackgroundColor = Color.CornflowerBlue,
-                Content = {RootDirectory = "Content"},
-            };
+                using var driver = new GameDriver
+                {
+                    IsMouseVisible = true,
+                    BackgroundColor = Color.CornflowerBlue,
+                    Content = { RootDirectory = "Content" },
+                };
 
-            driver.Graphics = GenerateGraphicsManager.Perform(driver);
-            driver.SpriteBatch = GenerateSpriteBatch.Perform(driver);
-            driver.Effect = GenerateBasicEffect.Perform(driver);
-            driver.Run();
+                driver.Graphics = GenerateGraphicsManager.Perform(driver);
+                driver.SpriteBatch = GenerateSpriteBatch.Perform(driver);
+                driver.Effect = GenerateBasicEffect.Perform(driver);
+                driver.Sprite = GenerateSprite.Perform(driver, "Tiles/WaterTile_5");
+
+                driver.Window.Title = $"Duality {GameVersion.Get()}";
+                driver.Run();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.Message);
+                Console.ReadKey();
+            }
 
             Log.Message("ShuttingDown");
             Log.Dispose();

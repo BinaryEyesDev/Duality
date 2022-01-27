@@ -1,4 +1,6 @@
-﻿using Duality.Utilities;
+﻿using Duality.Components;
+using Duality.Extensions;
+using Duality.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +14,7 @@ namespace Duality
         public GraphicsDeviceManager Graphics;
         public SpriteBatch SpriteBatch;
         public BasicEffect Effect;
+        public Sprite Sprite;
 
         protected override void Initialize()
         {
@@ -31,14 +34,16 @@ namespace Duality
         {
             GraphicsDevice.Clear(BackgroundColor);
             SpriteBatch.Begin(
-                SpriteSortMode.Deferred,
+                SpriteSortMode.Deferred, 
                 BlendState.AlphaBlend,
-                SamplerState.AnisotropicClamp, 
-                DepthStencilState.Default, 
+                SamplerState.AnisotropicClamp,
+                DepthStencilState.Default,
                 RasterizerState.CullCounterClockwise,
-                Effect,
+                null, 
                 Matrix.Identity);
+                
 
+            SpriteBatch.DrawSprite(Sprite);
 
             SpriteBatch.End();
             base.Draw(gameTime);
