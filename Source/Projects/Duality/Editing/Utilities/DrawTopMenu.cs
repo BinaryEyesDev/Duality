@@ -27,6 +27,9 @@ namespace Duality.Editing.Utilities
             if (ImGui.MenuItem("World Editing Window"))
                 WorldEditingWindow.IsEnabled = !WorldEditingWindow.IsEnabled;
 
+            if (ImGui.MenuItem("Texture Registry Window"))
+                TextureRegistryWindow.IsEnabled = !TextureRegistryWindow.IsEnabled;
+
             ImGui.EndMenu();
         }
 

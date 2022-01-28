@@ -13,7 +13,8 @@ namespace Duality.Utilities
             {
                 FollowSpeed = 5.0f,
                 Viewport = driver.GraphicsDevice.Viewport,
-                Transformation = Matrix.Identity
+                Transformation = Matrix.Identity,
+                Transform = {Position = new Vector2(32*64, 32*64)}
             };
 
             driver.GraphicsDevice.DeviceReset += (_, _) => camera.Viewport = driver.GraphicsDevice.Viewport;

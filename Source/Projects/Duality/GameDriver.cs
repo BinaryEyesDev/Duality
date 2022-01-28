@@ -3,6 +3,7 @@ using Duality.Components;
 using Duality.Data;
 using Duality.Editing;
 using Duality.Extensions;
+using Duality.Registries;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +19,9 @@ namespace Duality
         public SpriteBatch SpriteBatch;
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
+        public TextureRegistry TextureRegistry;
         public List<Sprite> Sprites;
+        public List<Track> TrackingComponents;
 
         public Camera2D MainCamera;
         public Player Player;

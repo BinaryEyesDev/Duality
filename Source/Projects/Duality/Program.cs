@@ -32,6 +32,7 @@ namespace Duality
                 driver.DefaultFont = GenerateDefaultFont.Perform(driver);
                 driver.FramerateDisplay = GenerateFramerateDisplay.Perform(driver);
                 driver.MainCamera = GenerateMainCamera.Perform(driver);
+                driver.TextureRegistry = GenerateTextureRegistry.Perform(driver);
                 driver.Sprites = new List<Sprite>();
 
                 driver.Player = GeneratePlayer.Perform(driver);

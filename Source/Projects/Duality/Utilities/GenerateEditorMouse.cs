@@ -1,4 +1,5 @@
 ﻿using Duality.Components;
+using Microsoft.Xna.Framework;
 
 namespace Duality.Utilities
 {
@@ -6,7 +7,8 @@ namespace Duality.Utilities
     {
         public static EditorMouse Perform(GameDriver driver)
         {
-            var sprite = GenerateSprite.Perform(driver, "Textures/WhiteFrame");
+            var sprite = GenerateSprite.Perform(driver, "Textures/SelectionFrame");
+            sprite.Tint = Color.Green;
             sprite.ZIndex = 0.0f;
 
             return new EditorMouse {Sprite = sprite};
