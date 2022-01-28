@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Duality.Components;
 using Duality.Data;
 using Duality.Extensions;
 using Duality.Utilities;
+using Microsoft.Xna.Framework;
 using Orca.Logging;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
@@ -14,38 +14,32 @@ namespace Duality.Agents
         : IAgent
     {
         private Vector2? _target;
+        private float _targetAngle;
 
         public float SwimSpeed;
         public Sprite Sprite;
-        public Vector2 Forward = new(-1.0f, 0.0f);
         public Transform2D Transform => Sprite.Transform;
 
         public Fish()
         {
-            SwimSpeed = GetRandom.Float(7.50f, 15.0f);
+            SwimSpeed = GetRandom.Float(15.0f, 25.0f);
         }
 
         public void SolveWorldActions(GameDriver driver)
         {
-            if (_target == null)
-            {
-                LookForTarget();
-                return;
-            }
+            if (_target == null) LookForTarget();
+            if (_target == null) return;
 
+            var rotationMatrix = Matrix.CreateRotationZ(_targetAngle);
+            var rotation = Quaternion.CreateFromRotationMatrix(rotationMatrix);
             var direction = Vector2.Normalize(_target.Value - Transform.Position);
-            var velocity = SwimSpeed*FrameTime.ScaledElapsed*direction;
-            Transform.Position += velocity;
 
-            var start = direction;
-            var end = Forward;
-            var angle = MathF.PI - (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
-
-
-            Log.Message($"Target={_target.Value}, Angle={angle.ToDegrees()}");
+            Transform.Rotation = _targetAngle;
+            Transform.Position += direction*SwimSpeed*FrameTime.ScaledElapsed;
 
             var distance = Vector2.Distance(Transform.Position, _target.Value);
-            if (distance > 5.0f) return;
+            if (distance > 1.0f) return;
+
             _target = null;
         }
 
@@ -56,27 +50,45 @@ namespace Duality.Agents
             var adjacentIndices = GenerateAdjacentIndices(cell);
             while (adjacentIndices.Count > 0 && _target == null)
             {
-                var adjacentIndex = adjacentIndices.PopRandom();
-                if (!adjacentIndex.IsValid)
+                var adjacentInfo = adjacentIndices.PopRandom();
+                if (!adjacentInfo.Index.IsValid)
                     continue;
 
-                var adjacent = GameDriver.Instance.World[adjacentIndex];
+                var adjacent = GameDriver.Instance.World[adjacentInfo.Index];
                 if (adjacent.Layers[0] == null || adjacent.Layers[0].Type != "Water")
                     continue;
 
-                _target = CalculateGridFromWorld.GetWorldPosition(adjacentIndex);
+                Log.Message($"FoundTarget: {adjacentInfo}");
+                _target = CalculateGridFromWorld.GetWorldPosition(adjacentInfo.Index);
+                _targetAngle = adjacentInfo.Angle;
             }
         }
 
-        private List<GridIndex> GenerateAdjacentIndices(GridIndex center)
+        private List<DirectionInfo> GenerateAdjacentIndices(GridIndex center)
         {
-            var indices = new GridIndex[4];
-            indices[0] = center + new GridIndex(-1, +0);
-            indices[1] = center + new GridIndex(+0, +1);
-            indices[2] = center + new GridIndex(+1, +0);
-            indices[3] = center + new GridIndex(+0, -1);
+            var info = new DirectionInfo[8];
+            info[0] = new DirectionInfo(center + new GridIndex(-1, +0), 270.0f);//left
+            info[1] = new DirectionInfo(center + new GridIndex(-1, +1), 225.0f);//bottom_left
+            info[2] = new DirectionInfo(center + new GridIndex(+0, +1), 180.0f);//bottom
+            info[3] = new DirectionInfo(center + new GridIndex(+1, +1), 135.0f);//bottom_right
+            info[4] = new DirectionInfo(center + new GridIndex(+1, +0), 90.0f);//right
+            info[5] = new DirectionInfo(center + new GridIndex(+1, -1), 45.0f);//top_right
+            info[6] = new DirectionInfo(center + new GridIndex(+0, -1), 0.0f);//top
+            info[7] = new DirectionInfo(center + new GridIndex(-1, -1), 325.0f);//bottom_left
 
-            return indices.ToList();
+            return info.ToList();
+        }
+    }
+
+    public readonly struct DirectionInfo
+    {
+        public readonly GridIndex Index;
+        public readonly float Angle;
+
+        public DirectionInfo(GridIndex index, float angle)
+        {
+            Index = index;
+            Angle = angle;
         }
     }
 }

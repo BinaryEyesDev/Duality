@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using Duality.Agents;
 using Duality.Data;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 
 namespace Duality.Registries
@@ -23,17 +25,25 @@ namespace Duality.Registries
         private void SpawnFish(TileEventArgs tileData)
         {
             Log.Message("SpawningFish");
-            var roll = GetRandom.Float(0.0f, 100.0f);
-            if (roll < 75.0f) return;
+            if (_fish == 1) return;
 
+            //var roll = GetRandom.Float(0.0f, 100.0f);
+            //if (roll < 75.0f) return;
+
+            _fish += 1;
             var image = GameDriver.Instance.TextureRegistry.FindCreature("Water", "Fish_1");
             var sprite = GenerateSprite.Perform(GameDriver.Instance, image);
             sprite.Transform.Position = tileData.WorldPosition;
-            sprite.Pivot = new Vector2(0.5f, 0.5f);
             sprite.ZIndex = (tileData.LayerId*GlobalConfiguration.SpriteLayerStep) - 0.01f;
 
-            var fish = new Fish {Sprite = sprite};
+            var fish = new Fish
+            {
+                Sprite = sprite,
+            };
+
             GameDriver.Instance.Agents.Add(fish);
         }
+
+        private int _fish;
     }
 }
