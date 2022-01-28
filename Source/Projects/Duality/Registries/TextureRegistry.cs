@@ -13,6 +13,12 @@ namespace Duality.Registries
         public readonly TextureMap Tiles;
         public readonly TextureMap Creatures;
 
+        public Texture2D FindCreature(string type, string name)
+        {
+            var typeFound = Creatures.TryGetValue(type, out var textures);
+            return typeFound ? textures.FirstOrDefault(entry => Path.GetFileNameWithoutExtension(entry.Name) == name) : null;
+        }
+
         public Texture2D FindTile(string type, string name)
         {
             var typeFound = Tiles.TryGetValue(type, out var textures);

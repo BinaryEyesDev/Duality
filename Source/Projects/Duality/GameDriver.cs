@@ -23,12 +23,14 @@ namespace Duality
         public SpriteBatch SpriteBatch;
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
-        
+
+        public GameWorld World;
         public TextureRegistry TextureRegistry;
         public CreatureRegistry CreatureRegistry;
         
         public List<Sprite> Sprites;
         public List<Track> TrackingComponents;
+        public List<IAgent> Agents;
 
         public Camera2D MainCamera;
         public LayerDarkMask LayerMasker;
@@ -36,7 +38,6 @@ namespace Duality
         public WorldGrid WorldGrid;
         public EditorMouse EditorMouse;
         
-        public GameWorld World;
         
         public List<GameSystem> UpdateSystems;
         public GameEditor Editor;

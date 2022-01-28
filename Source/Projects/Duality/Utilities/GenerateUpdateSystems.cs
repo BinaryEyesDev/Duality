@@ -14,6 +14,7 @@ namespace Duality.Utilities
                 new ShowLayers(),
                 new UpdateLayerMasker(),
                 new MovePlayerWithKeyboard(),
+                new PerformAgentAI(),
                 new CameraTrackTarget(),
                 new UpdateCameraZoom(),
                 new UpdateCameraTransformation(),

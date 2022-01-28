@@ -8,7 +8,7 @@ namespace Duality.Utilities
     {
         public static Vector2 GetWorldPosition(GridIndex index)
         {
-            var size = GlobalConfiguration.MapSize;
+            var size = GlobalConfiguration.TileSize;
             return new Vector2(index.Column*size.X, index.Row*size.Y);
         }
 
@@ -20,7 +20,7 @@ namespace Duality.Utilities
 
         public static Vector2 GetGridWorldPosition(Vector2 worldPosition)
         {
-            var mapSize = (GlobalConfiguration.MapSize-Vector2.One)*GlobalConfiguration.TileSize;
+            var mapSize = (GlobalConfiguration.MapSize - Vector2.One)*GlobalConfiguration.TileSize;
             var tileSize = GlobalConfiguration.TileSize;
             var result = new Vector2(
                 worldPosition.X < 0.0f ? 0.0f : worldPosition.X > mapSize.X ? mapSize.X : worldPosition.X,
