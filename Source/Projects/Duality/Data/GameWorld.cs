@@ -25,11 +25,11 @@ namespace Duality.Data
             _nodes[cell.Column, cell.Row].RemoveSprite(layerId);
         }
 
-        public void UpdateSpriteOnNode(GridIndex cell, Texture2D texture, int layerId)
+        public void UpdateSpriteOnNode(GridIndex cell, Texture2D texture, int layerId, string type = "")
         {
             Log.Message($"GeneratingGameNodeSprite: cell={cell}, layer={layerId}");
             var pos = cell.ToXnaVector2()*GlobalConfiguration.TileSize;
-            _nodes[cell.Column, cell.Row].AddSprite(texture, layerId, pos);
+            _nodes[cell.Column, cell.Row].AddSprite(texture, layerId, pos, type);
         }
 
         public GameWorld()

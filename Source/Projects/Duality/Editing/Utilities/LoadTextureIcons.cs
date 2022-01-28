@@ -8,7 +8,7 @@ namespace Duality.Editing.Utilities
         public static Dictionary<string, List<TexturePointerMapping>> Perform(GameDriver driver, ImGUIRenderer renderer)
         {
             var map = new Dictionary<string, List<TexturePointerMapping>>();
-            foreach (var (typeName, textureList) in driver.TextureRegistry.Map)
+            foreach (var (typeName, textureList) in driver.TextureRegistry.Tiles)
             {
                 if (!map.ContainsKey(typeName))
                     map.Add(typeName, new List<TexturePointerMapping>());

@@ -24,13 +24,18 @@ namespace Duality.Editing
             return found ? (T) window : null;
         }
 
+        public TexturePointerMapping GetCurrentlyMappedTile()
+        {
+            return TileEditingWindow.CurrentlySelected;
+        }
+
         public Texture2D GetSelectedTileTexture()
         {
             var mapping = TileEditingWindow.CurrentlySelected;
             if (!mapping.IsValid)
                 return null;
 
-            return Driver.TextureRegistry.FindTexture(mapping.TextureType, mapping.TextureName);
+            return Driver.TextureRegistry.FindTile(mapping.TextureType, mapping.TextureName);
         }
 
         public void Dispose()

@@ -32,7 +32,8 @@ namespace Duality.Systems
                     return;
                 }
 
-                driver.World.UpdateSpriteOnNode(gridIndex, texture, layerId);
+                var type = driver.Editor.GetCurrentlyMappedTile().TextureType;
+                driver.World.UpdateSpriteOnNode(gridIndex, texture, layerId, type);
             }
         }
     }

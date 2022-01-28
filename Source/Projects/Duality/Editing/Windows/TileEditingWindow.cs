@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Duality.Data;
+using Duality.Utilities;
 using ImGuiNET;
 
 namespace Duality.Editing.Windows
@@ -30,7 +31,6 @@ namespace Duality.Editing.Windows
             ImGui.Checkbox("Show All", ref ShowAllLayers);
             ImGui.Checkbox("Show Mask", ref ShowLayerMask);
             ImGui.Checkbox("Show Grid", ref ShowGrid);
-
             ImGui.Image(CurrentlySelected.Pointer, GlobalConfiguration.GuiTileSize);
             var icons = editor.TextureIcons;
             foreach (var (objectType, mappingList) in icons)
@@ -46,6 +46,19 @@ namespace Duality.Editing.Windows
                     
                     ImGui.TreePop();
                 }
+            }
+
+            if (ImGui.Button("Fill Layer"))
+            {
+                if (!CurrentlySelected.IsValid) return;
+                var texture = GameDriver.Instance.Editor.GetSelectedTileTexture();
+                if (texture == null) return;
+
+                var type = CurrentlySelected.TextureType;
+                RunOnAllTiles.Perform((index, node) =>
+                {
+                    GameDriver.Instance.World.UpdateSpriteOnNode(index, texture, CurrentTileLayer, type);
+                });
             }
         }
 

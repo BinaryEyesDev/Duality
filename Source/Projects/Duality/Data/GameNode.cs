@@ -26,7 +26,7 @@ namespace Duality.Data
             Layers[layerIndex] = null;
         }
 
-        public bool AddSprite(Texture2D texture, int layerId, Vector2 pos)
+        public bool AddSprite(Texture2D texture, int layerId, Vector2 pos, string type)
         {
             if (layerId is < 1 or > 5) return false;
 
@@ -34,6 +34,7 @@ namespace Duality.Data
             if (Layers[layerIndex] == null)
                 Layers[layerIndex] = GenerateSprite.Perform(GameDriver.Instance, texture);
 
+            Layers[layerIndex].Type = type;
             Layers[layerIndex].Image = texture;
             Layers[layerIndex].ZIndex = layerId*GlobalConfiguration.SpriteLayerStep;
             Layers[layerIndex].Transform.Position = pos;
