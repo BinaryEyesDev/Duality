@@ -7,7 +7,7 @@ namespace Duality.Components
 {
     public class WorldGrid
     {
-        public bool IsEnabled = true;
+        public bool IsEnabled = false;
 
         public void Draw(GameDriver driver)
         {

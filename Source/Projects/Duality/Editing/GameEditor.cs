@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Duality.Editing.Utilities;
 using Duality.Editing.Windows;
-using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.ImGui.Standard;
@@ -24,7 +23,7 @@ namespace Duality.Editing
             return found ? (T) window : null;
         }
 
-        public TexturePointerMapping GetCurrentlyMappedTile()
+        public TexturePointerMapping GetSelectedElement()
         {
             return TileEditingWindow.CurrentlySelected;
         }
@@ -35,7 +34,11 @@ namespace Duality.Editing
             if (!mapping.IsValid)
                 return null;
 
-            return Driver.TextureRegistry.FindTile(mapping.TextureType, mapping.TextureName);
+            var tile = Driver.TextureRegistry.FindTile(mapping.TextureType, mapping.TextureName);
+            if (tile != null)
+                return tile;
+
+            return Driver.TextureRegistry.FindObject(mapping.TextureType, mapping.TextureName);
         }
 
         public void Dispose()

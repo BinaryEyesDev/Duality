@@ -16,6 +16,18 @@ namespace Duality.Data
         public GameNode GetNode(GridIndex cell) => this[cell];
         public Sprite GetCellSprite(GridIndex cell, int layerId) => this[cell].GetSprite(layerId);
 
+        public int GetWaterTileCount()
+        {
+            var count = 0;
+            RunOnAllTiles.Perform((index, node) =>
+            {
+                if (node.Layers[0] != null && node.Layers[0].Type.Contains("Water"))
+                    count += 1;
+            });
+
+            return count;
+        }
+
         public void RemoveSpriteFromNode(GridIndex cell, int layerId)
         {
             Log.Message($"RemovingSpriteFromNode: cell={cell}, layer={layerId}");

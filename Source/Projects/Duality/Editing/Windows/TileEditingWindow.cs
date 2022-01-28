@@ -13,7 +13,7 @@ namespace Duality.Editing.Windows
         public static float CameraZoomFactor = 1.0f;
         public static bool ShowAllLayers = true;
         public static bool ShowLayerMask = true;
-        public static bool ShowGrid = true;
+        public static bool ShowGrid = false;
         public override string Id => "Tile Editing Window";
 
         public static void SetZoomFactory(float value)
@@ -31,8 +31,8 @@ namespace Duality.Editing.Windows
         {
             UpdateWindowRect(editor);
 
-            ImGui.SliderInt("L##Tile Layer", ref CurrentTileLayer, 1, 5);
-            ImGui.SliderFloat("Z##ZoomFactor", ref CameraZoomFactor, 0.1f, 2.0f);
+            ImGui.SliderInt("L##Tile Layer", ref CurrentTileLayer, 1, GlobalConfiguration.LayerCount);
+            ImGui.SliderFloat("Z##ZoomFactor", ref CameraZoomFactor, GlobalConfiguration.MinimumCameraZoomFactor, GlobalConfiguration.MaximumCameraZoomFactor);
             SetZoomFactory(CameraZoomFactor);
 
             ImGui.Checkbox("Show All", ref ShowAllLayers);

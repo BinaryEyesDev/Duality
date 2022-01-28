@@ -12,11 +12,18 @@ namespace Duality.Registries
     {
         public readonly TextureMap Tiles;
         public readonly TextureMap Creatures;
+        public readonly TextureMap Objects;
 
         public Texture2D FindCreature(string type, string name)
         {
             var typeFound = Creatures.TryGetValue(type, out var textures);
             return typeFound ? textures.FirstOrDefault(entry => Path.GetFileNameWithoutExtension(entry.Name) == name) : null;
+        }
+
+        public Texture2D FindObject(string type, string name)
+        {
+            var typeFound = Objects.TryGetValue(type, out var textures);
+            return typeFound ? textures.FirstOrDefault(entry => entry.Name == name) : null;
         }
 
         public Texture2D FindTile(string type, string name)
@@ -30,6 +37,7 @@ namespace Duality.Registries
             _driver = driver;
             Tiles = LoadTextures("Tiles");
             Creatures = LoadTextures("Creatures");
+            Objects = LoadTextures("Objects");
         }
 
         private static TextureMap LoadTextures(string objectType)

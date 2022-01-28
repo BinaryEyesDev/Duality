@@ -18,10 +18,10 @@ namespace Duality.Systems
             if (MouseInput.WasButtonJustPressed(0))
             {
                 if (driver.Editor.IsMouseCaptured) return;
-                if (!driver.Editor.GetCurrentlyMappedTile().IsValid) return;
+                if (!driver.Editor.GetSelectedElement().IsValid) return;
 
                 var gridIndex = CalculateGridFromWorld.GetGridIndex(gridPosition);
-                var type = driver.Editor.GetCurrentlyMappedTile().TextureType;
+                var type = driver.Editor.GetSelectedElement().TextureType;
                 TileEditingWindow.CurrentTileLayer = DetermineTypeLayerId(type);
 
                 var layerId = TileEditingWindow.CurrentTileLayer;
@@ -43,6 +43,8 @@ namespace Duality.Systems
             {
                 case "Water": return 1;
                 case "Grass": return 2;
+                case "Nature": return 3;
+                case "Buildings": return 4;
                 default: return TileEditingWindow.CurrentTileLayer;
             }
         }

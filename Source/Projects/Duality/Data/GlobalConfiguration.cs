@@ -11,9 +11,12 @@ namespace Duality.Data
         public static readonly Vector2 TileBoundSize = TileSize*0.5f;
         public static readonly Vector2 MapSize = new Vector2(24.0f, 24.0f);
         public static readonly Vector2 CameraStart = TileSize*(MapSize*0.5f);
-        public static readonly float SpriteLayerStep = 0.1f;
+        public const int LayerCount = 100;
+        public const float SpriteLayerStep = 0.01f;
+        public const float SpriteLayerUnderStep = 0.001f;
         public static readonly float MaximumCameraZoomFactor = 2.0f;
         public static readonly float MinimumCameraZoomFactor = 0.75f;
+        public const float BackgroundZIndex = 0.001f;
 
         public static readonly NuVector2 GuiMinWindowOffset = new NuVector2(20.0f, 20.0f);
         public static readonly NuVector2 GuiTileSize = TileSize.ToNuVector2();

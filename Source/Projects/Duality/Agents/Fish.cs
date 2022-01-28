@@ -3,6 +3,7 @@ using System.Linq;
 using Duality.Components;
 using Duality.Data;
 using Duality.Extensions;
+using Duality.Spawners;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
 using Orca.Logging;
@@ -19,6 +20,14 @@ namespace Duality.Agents
         public float SwimSpeed;
         public Sprite Sprite;
         public Transform2D Transform => Sprite.Transform;
+
+        public void Kill()
+        {
+            Log.Message("KillingFish");
+            Sprite.IsDeleted = true;
+            GameDriver.Instance.Agents.Remove(this);
+            FishSpawner.Fishes.Remove(this);
+        }
 
         public Fish()
         {
@@ -58,7 +67,6 @@ namespace Duality.Agents
                 if (adjacent.Layers[0] == null || adjacent.Layers[0].Type != "Water")
                     continue;
 
-                Log.Message($"FoundTarget: {adjacentInfo}");
                 _target = CalculateGridFromWorld.GetWorldPosition(adjacentInfo.Index);
                 _targetAngle = adjacentInfo.Angle;
             }

@@ -7,17 +7,16 @@ namespace Duality.Data
 {
     public class GameNode
     {
-        public const int LayerCount = 5;
         public Sprite[] Layers;
 
         public Sprite GetSprite(int layerId)
         {
-            return layerId is < 1 or > 5 ? null : Layers[layerId - 1];
+            return layerId is < 1 or > GlobalConfiguration.LayerCount ? null : Layers[layerId - 1];
         }
 
         public void RemoveSprite(int layerId)
         {
-            if (layerId is < 1 or > 5) return;
+            if (layerId is < 1 or > GlobalConfiguration.LayerCount) return;
             
             var layerIndex = layerId - 1;
             if (Layers[layerIndex] == null) return;
@@ -28,7 +27,7 @@ namespace Duality.Data
 
         public bool AddSprite(Texture2D texture, int layerId, Vector2 pos, string type)
         {
-            if (layerId is < 1 or > 5) return false;
+            if (layerId is < 1 or > GlobalConfiguration.LayerCount) return false;
 
             var layerIndex = layerId - 1;
             if (Layers[layerIndex] == null)
@@ -44,7 +43,7 @@ namespace Duality.Data
 
         public GameNode()
         {
-            Layers = new Sprite[LayerCount];
+            Layers = new Sprite[GlobalConfiguration.LayerCount];
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Duality.Components;
+using Duality.Data;
 using Duality.Editing.Utilities;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
@@ -65,8 +66,9 @@ namespace Duality
         {
             Log.Message("GeneratingBackground");
             var sprite = GenerateSprite.Perform(driver, "Textures/Background");
-            sprite.Transform.Scale = Vector2.One*10.0f;
-            sprite.ZIndex = 0.01f;
+            sprite.Type = "Background";
+            sprite.Transform.Scale = Vector2.One*8.0f;
+            sprite.ZIndex = GlobalConfiguration.BackgroundZIndex;
         }
     }
 }
