@@ -28,7 +28,7 @@ namespace Duality.Editing.Utilities
                 editor.GetEditingWindow<WorldEditingWindow>().ToggleEnabled();
 
             if (ImGui.MenuItem("Texture Registry Window"))
-                editor.GetEditingWindow<TextureRegistryWindow>().ToggleEnabled();
+                editor.GetEditingWindow<TileEditingWindow>().ToggleEnabled();
 
             ImGui.EndMenu();
         }

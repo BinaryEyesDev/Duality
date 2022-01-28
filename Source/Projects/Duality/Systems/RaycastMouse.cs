@@ -1,4 +1,6 @@
 ﻿using Duality.Components;
+using Duality.Data;
+using Duality.Editing.Windows;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
 
@@ -19,12 +21,18 @@ namespace Duality.Systems
                 if (driver.Editor.IsMouseCaptured)
                     return;
 
-                var texture = driver.Editor.GetSelectedTileTexture();
-                if (texture == null) 
-                    return;
+                var layerId = TileEditingWindow.CurrentTileLayer;
+                var gridIndex = CalculateGridFromWorld.GetGridIndex(gridPosition);
 
-                var sprite = GenerateSprite.Perform(driver, texture);
-                sprite.Transform.Position = gridPosition;
+                var texture = driver.Editor.GetSelectedTileTexture();
+                var shouldRemove = texture == null || texture == driver.World.GetCellSprite(gridIndex, layerId)?.Image;
+                if (shouldRemove)
+                {
+                    driver.World.RemoveSpriteFromNode(gridIndex, layerId);
+                    return;
+                }
+
+                driver.World.UpdateSpriteOnNode(gridIndex, texture, layerId);
             }
         }
     }

@@ -8,6 +8,7 @@ namespace Duality.Components
     {
         public Transform2D Transform = Transform2D.Identity;
         public bool IsEnabled;
+        public bool IsDeleted;
 
         public Texture2D Image;
         public Vector2 Size;
@@ -19,7 +20,7 @@ namespace Duality.Components
         public event EventHandler OnEnabled;
         public event EventHandler OnDisabled;
         public Vector2 Origin => Size*Pivot;
-
+        
         public void Enable(bool isEnabled)
         {
             if (IsEnabled == isEnabled)

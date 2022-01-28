@@ -14,17 +14,18 @@ namespace Duality.Editing
         protected abstract void PerformDraw(GameEditor editor);
         protected virtual void PerformPreDraw(GameEditor editor) { }
         public void ToggleEnabled() => IsEnabled = !IsEnabled;
+        public ImGuiWindowFlags WindowFlags = ImGuiWindowFlags.None;
 
         public void Draw(GameEditor editor)
         {
             PerformPreDraw(editor);
             if (!IsEnabled) return;
-            if (!ImGui.Begin(Id, ImGuiWindowFlags.Modal)) return;
+            if (!ImGui.Begin(Id, WindowFlags)) return;
 
             var position = ImGui.GetWindowPos();
             var size = ImGui.GetWindowSize();
             var min = position - GlobalConfiguration.GuiMinWindowOffset;
-            var max = min + size;
+            var max = min + size + GlobalConfiguration.GuiMinWindowOffset;
             IsMouseHovering = ImGui.IsMouseHoveringRect(min, max);
             //InspectWindowProperties(position, size, min, max);
 

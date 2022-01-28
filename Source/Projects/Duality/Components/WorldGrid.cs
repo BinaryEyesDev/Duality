@@ -19,14 +19,14 @@ namespace Duality.Components
             {
                 var position = start;
                 position.X += _tileSize.X*i;
-                spriteBatch.Draw(_image, position, null, _tint, MathHelper.ToRadians(180.0f), _origin, _scale, SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(_image, position, null, _tint, MathHelper.ToRadians(180.0f), _origin, _scale, SpriteEffects.None, 1.0f);
             }
 
             for (var i = 0; i < GlobalConfiguration.MapSize.Y+1; i++)
             {
                 var position = start;
                 position.Y += _tileSize.Y*i;
-                spriteBatch.Draw(_image, position, null, _tint, MathHelper.ToRadians(90.0f), _origin, _scale, SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(_image, position, null, _tint, MathHelper.ToRadians(90.0f), _origin, _scale, SpriteEffects.None, 1.0f);
             }
         }
 

@@ -26,7 +26,7 @@ namespace Duality.Editing
 
         public Texture2D GetSelectedTileTexture()
         {
-            var mapping = TextureRegistryWindow.CurrentlySelected;
+            var mapping = TileEditingWindow.CurrentlySelected;
             if (!mapping.IsValid)
                 return null;
 
@@ -64,7 +64,7 @@ namespace Duality.Editing
             TextureIcons = LoadTextureIcons.Perform(driver, Renderer);
             AddWindow<MouseDataWindow>();
             AddWindow<WorldEditingWindow>();
-            AddWindow<TextureRegistryWindow>();
+            AddWindow<TileEditingWindow>();
         }
 
         private void AddWindow<T>() where T : EditingWindow, new()

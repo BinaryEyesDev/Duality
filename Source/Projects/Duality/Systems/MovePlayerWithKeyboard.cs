@@ -18,8 +18,8 @@ namespace Duality.Systems
         private Vector2 GetMovementDirection(KeyboardState keyboard)
         {
             return new Vector2(
-                GetDirection(keyboard, Keys.Right, Keys.Left),
-                GetDirection(keyboard, Keys.Down, Keys.Up));
+                GetDirection(keyboard, Keys.D, Keys.A),
+                GetDirection(keyboard, Keys.S, Keys.W));
         }
 
         private float GetDirection(KeyboardState keyboard, Keys pos, Keys neg)

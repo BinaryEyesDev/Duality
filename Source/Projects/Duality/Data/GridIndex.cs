@@ -10,5 +10,10 @@
             Column = column;
             Row = row;
         }
+
+        public override string ToString()
+        {
+            return $"({Column}, {Row})";
+        }
     }
 }

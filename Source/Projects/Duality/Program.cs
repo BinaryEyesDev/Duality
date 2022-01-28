@@ -35,6 +35,7 @@ namespace Duality
                 driver.TextureRegistry = GenerateTextureRegistry.Perform(driver);
                 driver.Sprites = new List<Sprite>();
 
+                driver.LayerMasker = GenerateLayerMasker.Perform(driver);
                 driver.Player = GeneratePlayer.Perform(driver);
                 driver.WorldGrid = GenerateWorldGrid.Perform(driver);
                 driver.EditorMouse = GenerateEditorMouse.Perform(driver);
