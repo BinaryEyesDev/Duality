@@ -20,7 +20,6 @@ namespace Duality.Systems
             {
                 var scrollDelta = MouseInput.GetScrollDelta();
                 TileEditingWindow.SetZoomFactory(TileEditingWindow.CameraZoomFactor + scrollDelta*0.001f);
-                    ;
             }
 
             NextZoom = TileEditingWindow.CameraZoomFactor;

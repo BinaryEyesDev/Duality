@@ -18,8 +18,7 @@ namespace Duality.Editing.Windows
 
         public static void SetZoomFactory(float value)
         {
-            value = value < 0.5f ? 0.5f : value > 1.5f ? 1.5f : value;
-            CameraZoomFactor = value;
+            CameraZoomFactor = GlobalConfiguration.LockCameraZoom(value);
         }
 
         protected override void PerformPreDraw(GameEditor editor)

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Reflection.Metadata.Ecma335;
-using Duality.Agents;
+﻿using Duality.Agents;
 using Duality.Data;
 using Duality.Utilities;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 
 namespace Duality.Registries
@@ -14,6 +10,7 @@ namespace Duality.Registries
         public CreatureRegistry()
         {
             GameDriver.Instance.World.OnTiledPlaced += HandleTilePlaced;
+            _maxFish = GetRandom.Int32(15, 35);
         }
 
         private void HandleTilePlaced(object? sender, TileEventArgs args)
@@ -25,10 +22,10 @@ namespace Duality.Registries
         private void SpawnFish(TileEventArgs tileData)
         {
             Log.Message("SpawningFish");
-            if (_fish == 1) return;
+            if (_fish == _maxFish) return;
 
-            //var roll = GetRandom.Float(0.0f, 100.0f);
-            //if (roll < 75.0f) return;
+            var roll = GetRandom.Float(0.0f, 100.0f);
+            if (roll < 80.0f) return;
 
             _fish += 1;
             var image = GameDriver.Instance.TextureRegistry.FindCreature("Water", "Fish_1");
@@ -44,6 +41,7 @@ namespace Duality.Registries
             GameDriver.Instance.Agents.Add(fish);
         }
 
+        private int _maxFish;
         private int _fish;
     }
 }
