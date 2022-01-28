@@ -5,7 +5,6 @@ using Duality.Data;
 using Duality.Extensions;
 using Duality.Spawners;
 using Duality.Utilities;
-using Microsoft.Xna.Framework;
 using Orca.Logging;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
@@ -17,13 +16,17 @@ namespace Duality.Agents
         private Vector2? _target;
         private float _targetAngle;
 
+        public AgentState State { get; set; }
+        public Sprite Sprite { get; set; }
         public float SwimSpeed;
-        public Sprite Sprite;
         public Transform2D Transform => Sprite.Transform;
 
         public void Kill()
         {
+            if (State == AgentState.Dead) return;
+
             Log.Message("KillingFish");
+            State = AgentState.Dead;
             Sprite.IsDeleted = true;
             GameDriver.Instance.Agents.Remove(this);
             FishSpawner.Fishes.Remove(this);
@@ -39,10 +42,7 @@ namespace Duality.Agents
             if (_target == null) LookForTarget();
             if (_target == null) return;
 
-            var rotationMatrix = Matrix.CreateRotationZ(_targetAngle);
-            var rotation = Quaternion.CreateFromRotationMatrix(rotationMatrix);
             var direction = Vector2.Normalize(_target.Value - Transform.Position);
-
             Transform.Rotation = _targetAngle;
             Transform.Position += direction*SwimSpeed*FrameTime.ScaledElapsed;
 

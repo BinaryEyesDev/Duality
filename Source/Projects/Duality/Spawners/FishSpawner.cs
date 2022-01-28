@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using Duality.Agents;
+using Duality.Agents; 
 using Duality.Data;
 using Duality.Extensions;
 using Duality.Utilities;
@@ -11,18 +10,21 @@ namespace Duality.Spawners
     public class FishSpawner
     {
         public static readonly List<Fish> Fishes = new();
-        public static int OverpopulationThreshold = 40;
+        public static bool ExtinctionEventInProcess;
+        public static int OverpopulationThreshold = 4;
         public static int CurrentPopulationCount => Fishes.Count;
 
         public static void TrySpawnFish(TileEventArgs data)
         {
-            Log.Message("SpawningFish");
+            if (ExtinctionEventInProcess) return;
+
             var waterTileCount = GameDriver.Instance.World.GetWaterTileCount();
             if (waterTileCount < 8) return;
 
             var roll = GetRandom.Float(0.0f, 100.0f);
             if (roll < 75.0f) return;
 
+            Log.Message("SpawningFish");
             var image = GameDriver.Instance.TextureRegistry.FindCreature("Water", "Fish_1");
             var sprite = GenerateSprite.Perform(GameDriver.Instance, image);
             sprite.Transform.Position = data.WorldPosition;
@@ -50,9 +52,7 @@ namespace Duality.Spawners
             var deathCount = GetRandom.Int32(10, CurrentPopulationCount);
             while (deathCount > 0)
             {
-                var fish = Fishes.PopRandom();
-                fish.Kill();
-                
+                Fishes.PopRandom().State = AgentState.Dying;
                 deathCount -= 1;
             }
         }

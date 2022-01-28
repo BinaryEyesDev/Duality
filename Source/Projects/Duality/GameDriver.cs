@@ -58,9 +58,13 @@ namespace Duality
             for (var i = Sprites.Count - 1; i >= 0; i--)
             {
                 if (!Sprites[i].IsDeleted) continue;
-                
-                Log.Debug($"RemovingSprite: id={i}");
                 Sprites.RemoveAt(i);
+            }
+
+            for (var i = Agents.Count - 1; i >= 0; i--)
+            {
+                if (Agents[i].State != AgentState.Dead) continue;
+                Agents.RemoveAt(i);
             }
 
             FramerateDisplay.HandleUpdateComplete(gameTime);

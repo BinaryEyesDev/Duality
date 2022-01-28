@@ -11,6 +11,7 @@ namespace Duality.Utilities
             Log.Message("GeneratingUpdateSystems");
             return new List<GameSystem>
             {
+                new UpdateDyingAgents(),
                 new ShowLayers(),
                 new UpdateLayerMasker(),
                 new MovePlayerWithKeyboard(),
