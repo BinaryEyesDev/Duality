@@ -17,12 +17,14 @@ namespace Duality.Systems
             driver.EditorMouse.Transform.Position = gridPosition;
             if (MouseInput.WasButtonJustPressed(0))
             {
-                if (driver.Editor.IsMouseCaptured)
-                    return;
+                if (driver.Editor.IsMouseCaptured) return;
+                if (!driver.Editor.GetCurrentlyMappedTile().IsValid) return;
+
+                var gridIndex = CalculateGridFromWorld.GetGridIndex(gridPosition);
+                var type = driver.Editor.GetCurrentlyMappedTile().TextureType;
+                TileEditingWindow.CurrentTileLayer = DetermineTypeLayerId(type);
 
                 var layerId = TileEditingWindow.CurrentTileLayer;
-                var gridIndex = CalculateGridFromWorld.GetGridIndex(gridPosition);
-
                 var texture = driver.Editor.GetSelectedTileTexture();
                 var shouldRemove = texture == null || texture == driver.World.GetCellSprite(gridIndex, layerId)?.Image;
                 if (shouldRemove)
@@ -30,9 +32,18 @@ namespace Duality.Systems
                     driver.World.RemoveSpriteFromNode(gridIndex, layerId);
                     return;
                 }
-
-                var type = driver.Editor.GetCurrentlyMappedTile().TextureType;
+                
                 driver.World.UpdateSpriteOnNode(gridIndex, texture, layerId, type);
+            }
+        }
+
+        private int DetermineTypeLayerId(string type)
+        {
+            switch (type)
+            {
+                case "Water": return 1;
+                case "Grass": return 2;
+                default: return TileEditingWindow.CurrentTileLayer;
             }
         }
     }
