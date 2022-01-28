@@ -15,7 +15,7 @@ namespace Duality.Systems
 
             var viewportSize = new Vector3(viewport.Width, viewport.Height, 0.0f);
 
-            var position = -transform.Position.ToVector3();
+            var position = -transform.Position.ToXnaVector3();
             var translation = Matrix.CreateTranslation(position);
             var rotation = Matrix.CreateRotationZ(transform.Rotation.ToRadians());
             var scale = Matrix.CreateScale(zoomFactor, zoomFactor, 1.0f);

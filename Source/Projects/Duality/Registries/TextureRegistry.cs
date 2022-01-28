@@ -16,8 +16,6 @@ namespace Duality.Registries
             _driver = driver;
             LoadTextures("Tiles");
             LoadTextures("Objects");
-            LoadTextures("Textures");
-            //var objectDirectory = Path.Combine(contentDirectory, "Objects");
         }
 
         private void LoadTextures(string type)

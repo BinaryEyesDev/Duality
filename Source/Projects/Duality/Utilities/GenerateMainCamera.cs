@@ -1,4 +1,5 @@
 ﻿using Duality.Components;
+using Duality.Data;
 using Microsoft.Xna.Framework;
 using Orca.Logging;
 
@@ -14,7 +15,7 @@ namespace Duality.Utilities
                 FollowSpeed = 5.0f,
                 Viewport = driver.GraphicsDevice.Viewport,
                 Transformation = Matrix.Identity,
-                Transform = {Position = new Vector2(32*64, 32*64)}
+                Transform = {Position = GlobalConfiguration.CameraStart}
             };
 
             driver.GraphicsDevice.DeviceReset += (_, _) => camera.Viewport = driver.GraphicsDevice.Viewport;

@@ -12,11 +12,15 @@ namespace Duality.Editing
     {
         public GameDriver Driver { get; }
         public ImGUIRenderer Renderer { get; }
+        public Dictionary<string, List<TexturePointerMapping>> TextureIcons { get; }
 
         public void Dispose()
         {
-            foreach (var entry in _iconTextureMap)
-                Renderer.UnbindTexture(entry.Pointer);
+            foreach (var (_, mappingList) in TextureIcons)
+            {
+                foreach (var mapping in mappingList)
+                    Renderer.UnbindTexture(mapping.Pointer);
+            }
         }
 
         public void Update(GameDriver driver, GameTime time)
@@ -42,28 +46,28 @@ namespace Duality.Editing
                 .Initialize()
                 .RebuildFontAtlas();
 
+            TextureIcons = new Dictionary<string, List<TexturePointerMapping>>();
             foreach (var (typeName, textureList) in driver.TextureRegistry.Map)
             {
+                if (!TextureIcons.ContainsKey(typeName))
+                    TextureIcons.Add(typeName, new List<TexturePointerMapping>());
+
                 foreach (var entry in textureList)
                 {
-                    var mapping = new TexturePointerMapping(typeName, entry.Name, Renderer.BindTexture(entry));
-                    _iconTextureMap.Add(mapping);
+                    var mapping = new TexturePointerMapping(entry.Name, Renderer.BindTexture(entry));
+                    TextureIcons[typeName].Add(mapping);
                 }
             }
         }
-
-        private readonly List<TexturePointerMapping> _iconTextureMap = new();
     }
 
     public readonly struct TexturePointerMapping
     {
-        public readonly string ObjectType;
         public readonly string TextureName;
         public readonly IntPtr Pointer;
 
-        public TexturePointerMapping(string objectType, string textureName, IntPtr pointer)
+        public TexturePointerMapping(string textureName, IntPtr pointer)
         {
-            ObjectType = objectType;
             TextureName = textureName;
             Pointer = pointer;
         }

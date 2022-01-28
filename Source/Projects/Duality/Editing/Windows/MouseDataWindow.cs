@@ -1,4 +1,5 @@
 ﻿using Duality.Editing.Utilities;
+using Duality.Extensions;
 using Duality.Utilities;
 using ImGuiNET;
 using Microsoft.Xna.Framework;
@@ -19,11 +20,13 @@ namespace Duality.Editing.Windows
             var mouse = Mouse.GetState();
             var mousePosition = new Vector2(mouse.X, mouse.Y);
             var worldPosition = Vector2.Transform(mousePosition, driver.MainCamera.Inverted);
-            var gridPosition = CalculateGridFromWorld.Perform(worldPosition, new Vector2(64, 64));
+            var gridWorldPosition = CalculateGridFromWorld.GetGridWorldPosition(worldPosition);
+            var gridIndex = CalculateGridFromWorld.GetGridIndex(gridWorldPosition).ToXnaVector2();
 
             InspectVector2.Perform("Screen Position", mousePosition);
             InspectVector2.Perform("World Position", worldPosition);
-            InspectVector2.Perform("Grid Position", gridPosition);
+            InspectVector2.Perform("Grid Position", gridWorldPosition);
+            InspectVector2.Perform("Grid Index", gridIndex);
 
             ImGui.End();
         }
