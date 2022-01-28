@@ -23,7 +23,7 @@ namespace Duality
                 using var driver = new GameDriver
                 {
                     IsMouseVisible = true,
-                    BackgroundColor = Color.CornflowerBlue,
+                    BackgroundColor = Color.DarkBlue,
                     Content = {RootDirectory = "Content"},
                 };
 
@@ -32,7 +32,9 @@ namespace Duality
                 driver.DefaultFont = GenerateDefaultFont.Perform(driver);
                 driver.FramerateDisplay = GenerateFramerateDisplay.Perform(driver);
                 driver.MainCamera = GenerateMainCamera.Perform(driver);
+                driver.World = GenerateGameWorld.Perform(driver, "Duality");
                 driver.TextureRegistry = GenerateTextureRegistry.Perform(driver);
+                driver.CreatureRegistry = GenerateCreatureRegistry.Perform(driver);
                 driver.Sprites = new List<Sprite>();
 
                 driver.LayerMasker = GenerateLayerMasker.Perform(driver);
@@ -40,7 +42,8 @@ namespace Duality
                 driver.WorldGrid = GenerateWorldGrid.Perform(driver);
                 driver.EditorMouse = GenerateEditorMouse.Perform(driver);
 
-                driver.World = GenerateGameWorld.Perform(driver, "DefaultWorld");
+                GenerateBackground(driver);
+                
                 driver.UpdateSystems = GenerateUpdateSystems.Perform();
                 driver.Window.Title = $"Duality {GameVersion.Get()}";
 
@@ -55,6 +58,14 @@ namespace Duality
 
             Log.Message("ShuttingDown");
             Log.Dispose();
+        }
+
+        private static void GenerateBackground(GameDriver driver)
+        {
+            Log.Message("GeneratingBackground");
+            var sprite = GenerateSprite.Perform(driver, "Textures/Background");
+            sprite.Transform.Scale = Vector2.One*10.0f;
+            sprite.ZIndex = 0.01f;
         }
     }
 }

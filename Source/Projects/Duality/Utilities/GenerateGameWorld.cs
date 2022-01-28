@@ -8,10 +8,7 @@ namespace Duality.Utilities
         public static GameWorld Perform(GameDriver driver, string name)
         {
             Log.Message($"GeneratingGameWorld: {name}");
-            return new GameWorld
-            {
-                Name = name,
-            };
+            return new GameWorld {Name = name};
         }
     }
 }

@@ -6,6 +6,12 @@ namespace Duality.Utilities
 {
     public static class CalculateGridFromWorld
     {
+        public static Vector2 GetWorldPosition(GridIndex index)
+        {
+            var size = GlobalConfiguration.MapSize;
+            return new Vector2(index.Column*size.X, index.Row*size.Y);
+        }
+
         public static GridIndex GetGridIndex(Vector2 gridWorldPosition)
         {
             var indexPosition = gridWorldPosition/GlobalConfiguration.TileSize;

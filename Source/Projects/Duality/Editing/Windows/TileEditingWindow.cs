@@ -16,6 +16,12 @@ namespace Duality.Editing.Windows
         public static bool ShowGrid = true;
         public override string Id => "Tile Editing Window";
 
+        public static void SetZoomFactory(float value)
+        {
+            value = value < 0.5f ? 0.5f : value > 1.5f ? 1.5f : value;
+            CameraZoomFactor = value;
+        }
+
         protected override void PerformPreDraw(GameEditor editor)
         {
             IsEnabled = true;
@@ -28,6 +34,8 @@ namespace Duality.Editing.Windows
 
             ImGui.SliderInt("L##Tile Layer", ref CurrentTileLayer, 1, 5);
             ImGui.SliderFloat("Z##ZoomFactor", ref CameraZoomFactor, 0.1f, 2.0f);
+            SetZoomFactory(CameraZoomFactor);
+
             ImGui.Checkbox("Show All", ref ShowAllLayers);
             ImGui.Checkbox("Show Mask", ref ShowLayerMask);
             ImGui.Checkbox("Show Grid", ref ShowGrid);

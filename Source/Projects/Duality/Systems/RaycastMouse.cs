@@ -1,5 +1,4 @@
 ﻿using Duality.Components;
-using Duality.Data;
 using Duality.Editing.Windows;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;

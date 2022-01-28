@@ -23,7 +23,9 @@ namespace Duality
         public SpriteBatch SpriteBatch;
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
+        
         public TextureRegistry TextureRegistry;
+        public CreatureRegistry CreatureRegistry;
         
         public List<Sprite> Sprites;
         public List<Track> TrackingComponents;

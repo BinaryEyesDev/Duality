@@ -1,5 +1,7 @@
-﻿using Duality.Components;
+﻿using System;
+using Duality.Components;
 using Duality.Extensions;
+using Duality.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 
@@ -8,28 +10,29 @@ namespace Duality.Data
     public class GameWorld
     {
         public string Name;
-
-        public GameNode GetNode(GridIndex cell)
-        {
-            return _nodes[cell.Column, cell.Row];
-        }
-
-        public Sprite GetCellSprite(GridIndex cell, int layerId)
-        {
-            return _nodes[cell.Column, cell.Row].GetSprite(layerId);
-        }
+        public event EventHandler<TileEventArgs> OnTiledPlaced;
+        public event EventHandler<TileEventArgs> OnTiledRemoved;
+        public GameNode this[GridIndex index] => _nodes[index.Column, index.Row];
+        public GameNode GetNode(GridIndex cell) => this[cell];
+        public Sprite GetCellSprite(GridIndex cell, int layerId) => this[cell].GetSprite(layerId);
 
         public void RemoveSpriteFromNode(GridIndex cell, int layerId)
         {
             Log.Message($"RemovingSpriteFromNode: cell={cell}, layer={layerId}");
-            _nodes[cell.Column, cell.Row].RemoveSprite(layerId);
+            this[cell].RemoveSprite(layerId);
+
+            var worldPosition = CalculateGridFromWorld.GetWorldPosition(cell);
+            OnTiledRemoved?.Invoke(this, new TileEventArgs("", cell, worldPosition, layerId));
         }
 
         public void UpdateSpriteOnNode(GridIndex cell, Texture2D texture, int layerId, string type = "")
         {
             Log.Message($"GeneratingGameNodeSprite: cell={cell}, layer={layerId}");
             var pos = cell.ToXnaVector2()*GlobalConfiguration.TileSize;
-            _nodes[cell.Column, cell.Row].AddSprite(texture, layerId, pos, type);
+            this[cell].AddSprite(texture, layerId, pos, type);
+
+            var worldPosition = CalculateGridFromWorld.GetWorldPosition(cell);
+            OnTiledPlaced?.Invoke(this, new TileEventArgs(type, cell, worldPosition, layerId));
         }
 
         public GameWorld()

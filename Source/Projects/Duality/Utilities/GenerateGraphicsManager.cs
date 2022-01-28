@@ -11,7 +11,7 @@ namespace Duality.Utilities
             {
                 GraphicsProfile = GraphicsProfile.Reach,
                 IsFullScreen = false,
-                SynchronizeWithVerticalRetrace = false,
+                SynchronizeWithVerticalRetrace = true,
                 PreferMultiSampling = true
             };
 

@@ -11,6 +11,7 @@ namespace Duality.Registries
     public class TextureRegistry
     {
         public readonly TextureMap Tiles;
+        public readonly TextureMap Creatures;
 
         public Texture2D FindTile(string type, string name)
         {
@@ -22,7 +23,7 @@ namespace Duality.Registries
         {
             _driver = driver;
             Tiles = LoadTextures("Tiles");
-            //LoadTextures("Objects");
+            Creatures = LoadTextures("Creatures");
         }
 
         private static TextureMap LoadTextures(string objectType)
