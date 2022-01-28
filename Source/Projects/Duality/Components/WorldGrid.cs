@@ -6,8 +6,12 @@ namespace Duality.Components
 {
     public class WorldGrid
     {
+        public bool IsEnabled = true;
+
         public void Draw(GameDriver driver)
         {
+            if (!IsEnabled) return;
+
             var spriteBatch = driver.SpriteBatch;
 
             var start = -_tileSize*0.5f;

@@ -16,6 +16,7 @@ namespace Duality.Editing.Windows
 
             var driver = editor.Driver;
             ImGui.InputText("Name", ref driver.World.Name, 256);
+            ImGui.Checkbox("Draw Grid", ref driver.WorldGrid.IsEnabled);
 
             ImGui.End();
         }
