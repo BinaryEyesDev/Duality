@@ -14,11 +14,12 @@ namespace Duality.Utilities
 
         public static Vector2 GetGridWorldPosition(Vector2 worldPosition)
         {
+            var mapSize = (GlobalConfiguration.MapSize-Vector2.One)*GlobalConfiguration.TileSize;
             var tileSize = GlobalConfiguration.TileSize;
             var result = new Vector2(
-                MathF.Max(worldPosition.X, 0.0f), 
-                MathF.Max(worldPosition.Y, 0.0f));
-            
+                worldPosition.X < 0.0f ? 0.0f : worldPosition.X > mapSize.X ? mapSize.X : worldPosition.X,
+                worldPosition.Y < 0.0f ? 0.0f : worldPosition.Y > mapSize.Y ? mapSize.Y : worldPosition.Y);
+
             result += tileSize*0.5f;
             result.X = MathF.Truncate(result.X/tileSize.X);
             result.Y = MathF.Truncate(result.Y/tileSize.Y);

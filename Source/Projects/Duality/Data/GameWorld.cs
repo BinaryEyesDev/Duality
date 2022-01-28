@@ -9,6 +9,11 @@ namespace Duality.Data
     {
         public string Name;
 
+        public GameNode GetNode(GridIndex cell)
+        {
+            return _nodes[cell.Column, cell.Row];
+        }
+
         public Sprite GetCellSprite(GridIndex cell, int layerId)
         {
             return _nodes[cell.Column, cell.Row].GetSprite(layerId);

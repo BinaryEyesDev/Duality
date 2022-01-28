@@ -10,6 +10,7 @@ namespace Duality.Editing.Windows
         public static TexturePointerMapping CurrentlySelected = TexturePointerMapping.Invalid;
         public static int CurrentTileLayer = 1;
         public static bool ShowAllLayers = true;
+        public static bool ShowLayerMask = true;
         public override string Id => "Tile Editing Window";
 
         protected override void PerformPreDraw(GameEditor editor)
@@ -23,7 +24,8 @@ namespace Duality.Editing.Windows
             UpdateWindowRect(editor);
 
             ImGui.SliderInt("##Tile Layer", ref CurrentTileLayer, 1, 5);
-            ImGui.Checkbox("All Layers", ref ShowAllLayers);
+            ImGui.Checkbox("Show All", ref ShowAllLayers);
+            ImGui.Checkbox("Show Mask", ref ShowLayerMask);
 
             ImGui.Image(CurrentlySelected.Pointer, GlobalConfiguration.GuiTileSize);
             var icons = editor.TextureIcons;

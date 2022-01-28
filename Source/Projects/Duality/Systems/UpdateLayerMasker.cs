@@ -10,7 +10,7 @@ namespace Duality.Systems
         {
             var currentLayer = TileEditingWindow.CurrentTileLayer;
             var masker = driver.LayerMasker;
-            masker.Sprite.IsEnabled = currentLayer > 1;
+            masker.Sprite.IsEnabled = currentLayer > 1 && TileEditingWindow.ShowLayerMask;
             masker.Sprite.ZIndex = currentLayer*GlobalConfiguration.SpriteLayerStep - 0.01f;
         }
     }
