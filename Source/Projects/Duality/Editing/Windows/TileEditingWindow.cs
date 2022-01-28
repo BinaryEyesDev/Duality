@@ -19,7 +19,7 @@ namespace Duality.Editing.Windows
         protected override void PerformPreDraw(GameEditor editor)
         {
             IsEnabled = true;
-            WindowFlags = ImGuiWindowFlags.Modal | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoTitleBar;
+            WindowFlags = ImGuiWindowFlags.NoTitleBar;
         }
 
         protected override void PerformDraw(GameEditor editor)
@@ -66,8 +66,8 @@ namespace Duality.Editing.Windows
         {
             var viewport = editor.Driver.GraphicsDevice.Viewport;
             var viewportSize = new Vector2(viewport.Width, viewport.Height);
-            var size = new Vector2(120.0f, 400.0f);
-            var pos = new Vector2(viewportSize.X - size.X, 20.0f);
+            var size = new Vector2(150.0f, 400.0f);
+            var pos = new Vector2(viewportSize.X - size.X, 30.0f);
             ImGui.SetWindowPos(pos);
             ImGui.SetWindowSize(size);
         }
