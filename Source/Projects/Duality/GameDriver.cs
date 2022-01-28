@@ -57,7 +57,7 @@ namespace Duality
             SpriteBatch.End();
 
             FramerateDisplay.HandleDrawComplete();
-            Editor.Draw(this, gameTime);
+            Editor.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

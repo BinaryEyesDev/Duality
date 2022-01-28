@@ -10,11 +10,12 @@ namespace Duality.Editing.Windows
     {
         public static bool IsEnabled = false;
 
-        public static void Draw(GameDriver driver)
+        public static void Draw(GameEditor editor)
         {
             if (!IsEnabled) return;
             ImGui.Begin("MouseDataWindow");
-
+            
+            var driver = editor.Driver;
             var mouse = Mouse.GetState();
             var mousePosition = new Vector2(mouse.X, mouse.Y);
             var worldPosition = Vector2.Transform(mousePosition, driver.MainCamera.Inverted);

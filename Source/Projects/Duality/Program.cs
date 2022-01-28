@@ -34,10 +34,6 @@ namespace Duality
                 driver.MainCamera = GenerateMainCamera.Perform(driver);
                 driver.Sprites = new List<Sprite>();
 
-                GenerateSprite.Perform(driver, "Tiles/WaterTile_5").Transform.Position = new Vector2(0.0f, 0.0f);
-                GenerateSprite.Perform(driver, "Tiles/WaterTile_5").Transform.Position = new Vector2(64.0f, 0.0f);
-
-
                 driver.Player = GeneratePlayer.Perform(driver);
                 driver.WorldGrid = GenerateWorldGrid.Perform(driver);
                 driver.EditorMouse = GenerateEditorMouse.Perform(driver);

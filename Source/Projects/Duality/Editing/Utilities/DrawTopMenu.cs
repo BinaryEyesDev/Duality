@@ -5,9 +5,11 @@ namespace Duality.Editing.Utilities
 {
     public static class DrawTopMenu
     {
-        public static void Perform(GameEditor editor, GameDriver driver)
+        public static void Perform(GameEditor editor)
         {
             ImGui.BeginMainMenuBar();
+
+            var driver = editor.Driver;
             DrawFileMenu(driver);
             DrawWindowsMenu();
 

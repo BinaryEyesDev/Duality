@@ -7,22 +7,25 @@ namespace Duality.Editing
 {
     public class GameEditor
     {
+        public GameDriver Driver { get; private set; }
+
         public void Update(GameDriver driver, GameTime time)
         {
             
         }
 
-        public void Draw(GameDriver driver, GameTime time)
+        public void Draw(GameTime time)
         {
             _renderer.BeginLayout(time);
-            DrawTopMenu.Perform(this, driver);
-            MouseDataWindow.Draw(driver);
+            DrawTopMenu.Perform(this);
+            MouseDataWindow.Draw(this);
 
             _renderer.EndLayout();
         }
 
         public GameEditor(GameDriver driver)
         {
+            Driver = driver;
             _renderer = new ImGUIRenderer(driver)
                 .Initialize()
                 .RebuildFontAtlas();
