@@ -24,6 +24,9 @@ namespace Duality.Editing.Utilities
             if (ImGui.MenuItem("Mouse Data Window"))
                 MouseDataWindow.IsEnabled = !MouseDataWindow.IsEnabled;
 
+            if (ImGui.MenuItem("World Editing Window"))
+                WorldEditingWindow.IsEnabled = !WorldEditingWindow.IsEnabled;
+
             ImGui.EndMenu();
         }
 

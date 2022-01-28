@@ -38,6 +38,7 @@ namespace Duality
                 driver.WorldGrid = GenerateWorldGrid.Perform(driver);
                 driver.EditorMouse = GenerateEditorMouse.Perform(driver);
 
+                driver.World = GenerateGameWorld.Perform(driver, "DefaultWorld");
                 driver.UpdateSystems = GenerateUpdateSystems.Perform();
                 driver.Window.Title = $"Duality {GameVersion.Get()}";
 

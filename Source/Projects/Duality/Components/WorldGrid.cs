@@ -1,5 +1,4 @@
-﻿using Duality.Extensions;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Duality.Components
@@ -8,43 +7,44 @@ namespace Duality.Components
     {
         public void Draw(GameDriver driver)
         {
-            var camera = driver.MainCamera;
-            _batch.Begin(
-                SpriteSortMode.Deferred,
-                BlendState.AlphaBlend,
-                SamplerState.AnisotropicClamp,
-                DepthStencilState.Default,
-                RasterizerState.CullCounterClockwise,
-                null,
-                camera.Transformation);
+            var spriteBatch = driver.SpriteBatch;
 
-            var start = new Vector2(-1024.0f, 0.0f);
-            for (var i = 0; i < 55; i++)
+            var start = -_tileSize*0.5f;
+            for (var i = 0; i < 64; i++)
             {
-                var step = start.X + 64.0f*i;
-                var location = new Vector2(step, 0.0f);
-                _batch.Draw(_line, location, null, Color.White, 0.0f, _origin, _scale, SpriteEffects.None, 0.0f);
+                var position = start;
+                position.X += _tileSize.X*i;
+                spriteBatch.Draw(_image, position, null, _tint, MathHelper.ToRadians(180.0f), _origin, _scale, SpriteEffects.None, 0.0f);
             }
 
-            for (var i = 0; i < 55; i++)
+            for (var i = 0; i < 64; i++)
             {
-                var step = start.Y + 64.0f*i;
-                var location = new Vector2(0.0f, step);
-                _batch.Draw(_line, location, null, Color.White, 90.0f.ToRadians(), _origin, _scale, SpriteEffects.None, 0.0f);
+                var position = start;
+                position.Y += _tileSize.Y*i;
+                spriteBatch.Draw(_image, position, null, _tint, MathHelper.ToRadians(90.0f), _origin, _scale, SpriteEffects.None, 0.0f);
             }
-
-            _batch.End();
         }
 
         public WorldGrid(GameDriver driver)
         {
-            _line = driver.Content.Load<Texture2D>("Textures/White");
-            _batch = new SpriteBatch(driver.GraphicsDevice);
+            _tileSize = new Vector2(64.0f, 64.0f);
+
+            _image = new Texture2D(driver.GraphicsDevice, 1, 1);
+            _image.SetData(new[]{Color.White});
+
+            _imageSize = new Vector2(_image.Width, _image.Height);
+            _scale = new Vector2(1.0f, _tileSize.Y*64);
+            _pivot = new Vector2(0.5f, 1.0f);
+            _origin = _imageSize*_pivot;
+            _tint = Color.White;
         }
 
-        private readonly Vector2 _origin = new Vector2(512.0f, 512.0f)*0.5f;
-        private readonly Vector2 _scale = new(1.0f/512.0f, 2.0f);
-        private readonly Texture2D _line;
-        private readonly SpriteBatch _batch;
+        private readonly Vector2 _tileSize;
+        private readonly Color _tint;
+        private readonly Vector2 _origin;
+        private readonly Vector2 _pivot;
+        private readonly Vector2 _scale;
+        private readonly Vector2 _imageSize;
+        private readonly Texture2D _image;
     }
 }

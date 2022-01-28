@@ -19,6 +19,7 @@ namespace Duality.Editing
             _renderer.BeginLayout(time);
             DrawTopMenu.Perform(this);
             MouseDataWindow.Draw(this);
+            WorldEditingWindow.Draw(this);
 
             _renderer.EndLayout();
         }

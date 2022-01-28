@@ -9,6 +9,7 @@ namespace Duality.Utilities
         {
             Log.Message("GeneratingPlayer");
             var sprite = GenerateSprite.Perform(driver, "Textures/MockPlayer");
+            sprite.IsEnabled = false;
             sprite.ZIndex = 0.4f;
             return new Player
             {

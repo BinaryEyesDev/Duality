@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Duality.Components;
+using Duality.Data;
 using Duality.Editing;
 using Duality.Extensions;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace Duality
 {
@@ -24,6 +24,8 @@ namespace Duality
         public Player Player;
         public WorldGrid WorldGrid;
         public EditorMouse EditorMouse;
+        
+        public GameWorld World;
         
         public List<GameSystem> UpdateSystems;
         public GameEditor Editor;
@@ -46,7 +48,7 @@ namespace Duality
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(BackgroundColor);
-            SpriteBatch.Begin(SpriteSortMode.Deferred, null,null,null,null, null, MainCamera.Transformation);
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, MainCamera.Transformation);
 
             for (var i = 0; i < Sprites.Count; i++)
             {
@@ -54,6 +56,7 @@ namespace Duality
                     SpriteBatch.DrawSprite(Sprites[i]);
             }
 
+            WorldGrid.Draw(this);
             SpriteBatch.End();
 
             FramerateDisplay.HandleDrawComplete();
