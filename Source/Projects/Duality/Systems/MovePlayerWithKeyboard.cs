@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Duality.Components;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Duality.Systems
@@ -6,12 +7,11 @@ namespace Duality.Systems
     public class MovePlayerWithKeyboard
         : GameSystem
     {
-        public override void Perform(GameDriver driver, GameTime time)
+        public override void Perform(GameDriver driver)
         {
             var player = driver.Player;
-            var elapsed = (float) time.ElapsedGameTime.TotalSeconds;
             var keyboard = Keyboard.GetState();
-            var velocity = GetMovementDirection(keyboard)*elapsed*player.MovementSpeed;
+            var velocity = GetMovementDirection(keyboard)*FrameTime.Elapsed*player.MovementSpeed;
             player.Transform.Position += velocity;
         }
 

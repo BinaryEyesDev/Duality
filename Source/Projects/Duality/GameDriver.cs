@@ -20,6 +20,7 @@ namespace Duality
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
         public TextureRegistry TextureRegistry;
+        
         public List<Sprite> Sprites;
         public List<Track> TrackingComponents;
 
@@ -39,9 +40,11 @@ namespace Duality
             var keyboard = Keyboard.GetState();
             if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
-            
+
+            MouseInput.Update();
+            FrameTime.Update(gameTime);
             for (var i = 0; i < UpdateSystems.Count; i++)
-                UpdateSystems[i].Perform(this, gameTime);
+                UpdateSystems[i].Perform(this);
 
             FramerateDisplay.HandleUpdateComplete(gameTime);
             Editor.Update(this, gameTime);

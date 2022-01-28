@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Globalization;
 using Duality.Data;
 using ImGuiNET;
-using Vector2 = System.Numerics.Vector2;
 
 namespace Duality.Editing.Windows
 {
     public static class TextureRegistryWindow
     {
         public static bool IsEnabled;
-        public static IntPtr CurrentlySelected = IntPtr.Zero;
+        public static TexturePointerMapping CurrentlySelected = TexturePointerMapping.Invalid;
 
         public static void Draw(GameEditor editor)
         {
@@ -18,7 +16,7 @@ namespace Duality.Editing.Windows
 
             if (!ImGui.Begin("Texture Registry Window"))
                 return;
-            ImGui.Image(CurrentlySelected, GlobalConfiguration.GuiTileSize);
+            ImGui.Image(CurrentlySelected.Pointer, GlobalConfiguration.GuiTileSize);
 
             var icons = editor.TextureIcons;
             foreach (var (objectType, mappingList) in icons)
@@ -29,7 +27,7 @@ namespace Duality.Editing.Windows
                     {
                         var pressed = ImGui.ImageButton(mapping.Pointer, GlobalConfiguration.GuiTileIconSize);
                         if (pressed)
-                            HandlePressed(mapping.Pointer);
+                            HandlePressed(mapping);
                     }
                     
                     ImGui.TreePop();
@@ -39,12 +37,9 @@ namespace Duality.Editing.Windows
             ImGui.End();
         }
 
-        private static void HandlePressed(IntPtr texturePtr)
+        private static void HandlePressed(TexturePointerMapping mapping)
         {
-            if (CurrentlySelected == texturePtr)
-                CurrentlySelected = IntPtr.Zero;
-            else
-                CurrentlySelected = texturePtr;
+            CurrentlySelected = CurrentlySelected.Pointer == mapping.Pointer ? TexturePointerMapping.Invalid : mapping;
         }
     }
 }

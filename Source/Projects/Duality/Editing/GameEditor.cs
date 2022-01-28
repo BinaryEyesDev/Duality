@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Duality.Editing.Utilities;
 using Duality.Editing.Windows;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.ImGui.Standard;
 
 namespace Duality.Editing
@@ -13,6 +14,15 @@ namespace Duality.Editing
         public GameDriver Driver { get; }
         public ImGUIRenderer Renderer { get; }
         public Dictionary<string, List<TexturePointerMapping>> TextureIcons { get; }
+
+        public Texture2D GetSelectedTileTexture()
+        {
+            var mapping = TextureRegistryWindow.CurrentlySelected;
+            if (!mapping.IsValid)
+                return null;
+
+            return Driver.TextureRegistry.FindTexture(mapping.TextureType, mapping.TextureName);
+        }
 
         public void Dispose()
         {
@@ -42,32 +52,22 @@ namespace Duality.Editing
         public GameEditor(GameDriver driver)
         {
             Driver = driver;
-            Renderer = new ImGUIRenderer(driver)
-                .Initialize()
-                .RebuildFontAtlas();
-
-            TextureIcons = new Dictionary<string, List<TexturePointerMapping>>();
-            foreach (var (typeName, textureList) in driver.TextureRegistry.Map)
-            {
-                if (!TextureIcons.ContainsKey(typeName))
-                    TextureIcons.Add(typeName, new List<TexturePointerMapping>());
-
-                foreach (var entry in textureList)
-                {
-                    var mapping = new TexturePointerMapping(entry.Name, Renderer.BindTexture(entry));
-                    TextureIcons[typeName].Add(mapping);
-                }
-            }
+            Renderer = new ImGUIRenderer(driver).Initialize().RebuildFontAtlas();
+            TextureIcons = LoadTextureIcons.Perform(driver, Renderer);
         }
     }
 
     public readonly struct TexturePointerMapping
     {
+        public static TexturePointerMapping Invalid => new("", "", IntPtr.Zero);
+        public readonly string TextureType;
         public readonly string TextureName;
         public readonly IntPtr Pointer;
+        public bool IsValid => Pointer != IntPtr.Zero;
 
-        public TexturePointerMapping(string textureName, IntPtr pointer)
+        public TexturePointerMapping(string textureType, string textureName, IntPtr pointer)
         {
+            TextureType = textureType;
             TextureName = textureName;
             Pointer = pointer;
         }

@@ -6,7 +6,7 @@ namespace Duality.Systems
     public class UpdateCameraTransformation
         : GameSystem
     {
-        public override void Perform(GameDriver driver, GameTime time)
+        public override void Perform(GameDriver driver)
         {
             var camera = driver.MainCamera;
             var transform = camera.Transform;

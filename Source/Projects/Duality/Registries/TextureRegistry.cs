@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 
@@ -10,6 +12,15 @@ namespace Duality.Registries
     public class TextureRegistry
     {
         public readonly TextureMap Map = new();
+
+        public Texture2D FindTexture(string type, string name)
+        {
+            var typeFound = Map.TryGetValue(type, out var textures);
+            if (!typeFound)
+                return null;
+
+            return textures.FirstOrDefault(entry => entry.Name == name);
+        }
 
         public TextureRegistry(GameDriver driver)
         {

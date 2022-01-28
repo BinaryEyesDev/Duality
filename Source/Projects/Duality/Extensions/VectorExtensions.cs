@@ -9,6 +9,11 @@ namespace Duality.Extensions
 {
     public static class VectorExtensions
     {
+        public static GridIndex ToGridIndex(this XnaVector2 vector)
+        {
+            return new GridIndex((int) vector.X, (int) vector.Y);
+        }
+
         public static NuVector2 ToNuVector2(this GridIndex index)
         {
             return new NuVector2(index.Column, index.Row);
