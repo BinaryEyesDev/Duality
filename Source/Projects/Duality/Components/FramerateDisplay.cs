@@ -44,8 +44,8 @@ namespace Duality.Components
             var valueString = $"{value}";
             var stringSize = font.MeasureString(valueString);
             var screenWidth = device.Viewport.Width;
-            var positionX = screenWidth - stringSize.X - offset;
-            var positionY = offset + (stringSize.Y + 3.0f) * _lineIndex;
+            var positionX = offset;//screenWidth - stringSize.X - offset;
+            var positionY = offset*2 + (stringSize.Y + 3.0f) * _lineIndex;
 
             var position = new Vector2(positionX, positionY);
             var shadowPosition = position - new Vector2(-1.0f, -1.0f);
