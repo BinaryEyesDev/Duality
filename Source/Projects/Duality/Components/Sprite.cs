@@ -10,6 +10,7 @@ namespace Duality.Components
         public bool IsEnabled;
         public bool IsDeleted;
 
+        public string Type;
         public Texture2D Image;
         public Vector2 Size;
         public Vector2 Pivot;
