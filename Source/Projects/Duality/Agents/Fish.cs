@@ -1,5 +1,6 @@
 ﻿using Duality.Components;
 using Duality.Extensions;
+using Duality.Utilities;
 using Microsoft.Xna.Framework;
 
 namespace Duality.Agents
@@ -18,6 +19,15 @@ namespace Duality.Agents
             var direction = Vector2.Transform(Forward, rotation);
             var velocity = direction*SwimSpeed*FrameTime.ScaledElapsed;
             Transform.Position += velocity;
+
+            if (Transform.Position.X < 0.0f)
+            {
+                Transform.Rotation = 180.0f;
+                return;
+            }
+
+            var gridIndex = CalculateGridFromWorld.GetGridWorldPosition(Transform.Position);
+
         }
     }
 }

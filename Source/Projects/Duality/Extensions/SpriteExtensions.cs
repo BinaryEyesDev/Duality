@@ -11,7 +11,7 @@ namespace Duality.Extensions
                 sprite.Transform.Position,
                 sprite.Frame,
                 sprite.Tint,
-                sprite.Transform.Rotation,
+                sprite.Transform.Rotation.ToRadians(),
                 sprite.Origin,
                 sprite.Transform.Scale,
                 sprite.Effects,
