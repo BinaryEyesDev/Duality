@@ -22,6 +22,7 @@ namespace Duality.Systems
             var viewTranslation = Matrix.CreateTranslation(viewportSize*0.5f);
 
             camera.Transformation = translation*rotation*scale*viewTranslation;
+            camera.Inverted = Matrix.Invert(camera.Transformation);
         }
     }
 }

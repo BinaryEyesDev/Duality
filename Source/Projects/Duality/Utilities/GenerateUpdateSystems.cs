@@ -14,6 +14,7 @@ namespace Duality.Utilities
                 new MovePlayerWithKeyboard(),
                 new CameraTrackTarget(),
                 new UpdateCameraTransformation(),
+                new RaycastMouse(),
             };
         }
     }

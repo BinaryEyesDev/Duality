@@ -6,6 +6,7 @@ using Duality.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Duality
 {
@@ -17,24 +18,23 @@ namespace Duality
         public SpriteBatch SpriteBatch;
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
-        public Camera2D MainCamera;
-        public Player Player;
         public List<Sprite> Sprites;
 
+        public Camera2D MainCamera;
+        public Player Player;
+        public WorldGrid WorldGrid;
+        public EditorMouse EditorMouse;
+        
         public List<GameSystem> UpdateSystems;
         public GameEditor Editor;
-
-        protected override void Initialize()
-        {
-            ResizeGraphicsManager.Perform(Graphics);
-        }
+        protected override void Initialize() => ResizeGraphicsManager.Perform(Graphics);
 
         protected override void Update(GameTime gameTime)
         {
             var keyboard = Keyboard.GetState();
             if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
-
+            
             for (var i = 0; i < UpdateSystems.Count; i++)
                 UpdateSystems[i].Perform(this, gameTime);
 
@@ -46,14 +46,7 @@ namespace Duality
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(BackgroundColor);
-            SpriteBatch.Begin(
-                SpriteSortMode.Deferred, 
-                BlendState.AlphaBlend,
-                SamplerState.AnisotropicClamp,
-                DepthStencilState.Default,
-                RasterizerState.CullCounterClockwise,
-                null, 
-                MainCamera.Transformation);
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null,null,null,null, null, MainCamera.Transformation);
 
             for (var i = 0; i < Sprites.Count; i++)
             {

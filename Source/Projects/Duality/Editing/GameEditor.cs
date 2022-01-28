@@ -1,7 +1,9 @@
-﻿using ImGuiNET;
+﻿using Duality.Editing.Utilities;
+using Duality.Utilities;
+using ImGuiNET;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.ImGui.Standard;
-using Orca.Logging;
 
 namespace Duality.Editing
 {
@@ -15,28 +17,23 @@ namespace Duality.Editing
         public void Draw(GameDriver driver, GameTime time)
         {
             _renderer.BeginLayout(time);
-            DrawTopMenu(driver);
+            DrawTopMenu.Perform(this, driver);
+
+            ImGui.Begin("MouseDataWindow");
+
+            var mouse = Mouse.GetState();
+            var mousePosition = new Vector2(mouse.X, mouse.Y);
+            var worldPosition = Vector2.Transform(mousePosition, driver.MainCamera.Inverted);
+            var gridPosition = CalculateGridFromWorld.Perform(worldPosition, new Vector2(64, 64));
+
+            InspectVector2.Perform("Screen Position", mousePosition);
+            InspectVector2.Perform("World Position", worldPosition);
+            InspectVector2.Perform("Grid Position", gridPosition);
+
+            ImGui.End();
+
 
             _renderer.EndLayout();
-        }
-
-        private void DrawTopMenu(GameDriver driver)
-        {
-            ImGui.BeginMainMenuBar();
-            if (ImGui.BeginMenu("File"))
-            {
-                if (ImGui.MenuItem("New"))
-                {
-
-                }
-
-                if (ImGui.MenuItem("Quit"))
-                    driver.Exit();
-
-                ImGui.EndMenu();
-            }
-
-            ImGui.EndMainMenuBar();
         }
 
         public GameEditor(GameDriver driver)

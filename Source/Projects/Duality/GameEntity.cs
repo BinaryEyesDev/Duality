@@ -12,6 +12,12 @@ namespace Duality
         public event EventHandler<ComponentEventArgs> OnComponentRemoved;
         public int ComponentCount => _components.Count;
 
+        public T GetComponent<T>() where T : Component
+        {
+            var found = _components.TryGetValue(typeof(T), out var component);
+            return found ? (T) component : null;
+        }
+
         public GameEntity(int id, string name = "Entity")
         {
             Id = id;
@@ -21,16 +27,16 @@ namespace Duality
         public void AddComponent<T>() where T : Component, new()
         {
             var component = new T();
-            _components.Add(component);
+            _components.Add(typeof(T), component);
             OnComponentAdded?.Invoke(this, new ComponentEventArgs(component));
         }
 
-        public void RemoveComponent(Component component)
+        public void RemoveComponent<T>(T component) where T : Component
         {
-            if (_components.Remove(component))
+            if (_components.Remove(component.GetType()))
                 OnComponentRemoved?.Invoke(this, new ComponentEventArgs(component));
         }
 
-        private readonly List<Component> _components = new();
+        private readonly Dictionary<Type, Component> _components = new();
     }
 }

@@ -9,6 +9,7 @@ namespace Duality.Components
         public float FollowSpeed;
         public Viewport Viewport;
         public Matrix Transformation;
+        public Matrix Inverted;
         public float ZoomFactor => Transform.Scale.X;
     }
 }
