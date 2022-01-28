@@ -9,7 +9,7 @@ namespace Duality.Utilities
         {
             var sprite = GenerateSprite.Perform(driver, "Textures/SelectionFrame");
             sprite.Tint = Color.Green;
-            sprite.ZIndex = 0.0f;
+            sprite.ZIndex = 1.0f;
 
             return new EditorMouse {Sprite = sprite};
         }

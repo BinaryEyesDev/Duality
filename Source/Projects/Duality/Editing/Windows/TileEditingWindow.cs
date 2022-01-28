@@ -9,8 +9,10 @@ namespace Duality.Editing.Windows
     {
         public static TexturePointerMapping CurrentlySelected = TexturePointerMapping.Invalid;
         public static int CurrentTileLayer = 1;
+        public static float CameraZoomFactor = 1.0f;
         public static bool ShowAllLayers = true;
         public static bool ShowLayerMask = true;
+        public static bool ShowGrid = true;
         public override string Id => "Tile Editing Window";
 
         protected override void PerformPreDraw(GameEditor editor)
@@ -23,9 +25,11 @@ namespace Duality.Editing.Windows
         {
             UpdateWindowRect(editor);
 
-            ImGui.SliderInt("##Tile Layer", ref CurrentTileLayer, 1, 5);
+            ImGui.SliderInt("L##Tile Layer", ref CurrentTileLayer, 1, 5);
+            ImGui.SliderFloat("Z##ZoomFactor", ref CameraZoomFactor, 0.1f, 2.0f);
             ImGui.Checkbox("Show All", ref ShowAllLayers);
             ImGui.Checkbox("Show Mask", ref ShowLayerMask);
+            ImGui.Checkbox("Show Grid", ref ShowGrid);
 
             ImGui.Image(CurrentlySelected.Pointer, GlobalConfiguration.GuiTileSize);
             var icons = editor.TextureIcons;
@@ -49,7 +53,7 @@ namespace Duality.Editing.Windows
         {
             var viewport = editor.Driver.GraphicsDevice.Viewport;
             var viewportSize = new Vector2(viewport.Width, viewport.Height);
-            var size = new Vector2(100.0f, 400.0f);
+            var size = new Vector2(120.0f, 400.0f);
             var pos = new Vector2(viewportSize.X - size.X, 20.0f);
             ImGui.SetWindowPos(pos);
             ImGui.SetWindowSize(size);

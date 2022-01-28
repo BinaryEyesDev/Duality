@@ -15,7 +15,7 @@ namespace Duality.Utilities
                 new UpdateLayerMasker(),
                 new MovePlayerWithKeyboard(),
                 new CameraTrackTarget(),
-                new CameraMouseControls(),
+                new UpdateCameraZoom(),
                 new UpdateCameraTransformation(),
                 new RaycastMouse(),
             };
