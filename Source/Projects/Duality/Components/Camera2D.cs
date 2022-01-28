@@ -10,6 +10,11 @@ namespace Duality.Components
         public Viewport Viewport;
         public Matrix Transformation;
         public Matrix Inverted;
-        public float ZoomFactor => Transform.Scale.X;
+
+        public float ZoomFactor
+        {
+            get => Transform.Scale.X;
+            set => Transform.Scale.X = value;
+        }
     }
 }

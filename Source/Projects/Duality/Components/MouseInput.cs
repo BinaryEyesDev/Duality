@@ -6,6 +6,7 @@ namespace Duality.Components
 {
     public static class MouseInput
     {
+        public static float GetScrollDelta() => _current.ScrollWheelValue - _previous.ScrollWheelValue;
         public static Vector2 GetMovementDelta() => _delta;
         public static Vector2 GetScreenPosition() => _position;
         public static bool IsButtonUp(int buttonIndex) => _current.IsButtonPressed(buttonIndex);
@@ -25,7 +26,7 @@ namespace Duality.Components
         {
             _previous = _current;
             _current = Mouse.GetState();
-
+            
             _position = _current.Position.ToVector2();
             _delta = _position - _previous.Position.ToVector2();
         }
