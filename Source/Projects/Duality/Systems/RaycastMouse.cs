@@ -1,8 +1,6 @@
 ﻿using Duality.Components;
-using Duality.Data;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
-using Orca.Logging;
 
 namespace Duality.Systems
 {
