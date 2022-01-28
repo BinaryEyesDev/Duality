@@ -2,23 +2,16 @@
 
 namespace Duality.Editing.Windows
 {
-    public static class WorldEditingWindow
+    public class WorldEditingWindow
+        : EditingWindow
     {
-        public static bool IsEnabled;
+        public override string Id => "World Editing Window";
 
-        public static void Draw(GameEditor editor)
+        protected override void PerformDraw(GameEditor editor)
         {
-            if (!IsEnabled)
-                return;
-
-            if (!ImGui.Begin("World Editing Window"))
-                return;
-
             var driver = editor.Driver;
             ImGui.InputText("Name", ref driver.World.Name, 256);
             ImGui.Checkbox("Draw Grid", ref driver.WorldGrid.IsEnabled);
-
-            ImGui.End();
         }
     }
 }

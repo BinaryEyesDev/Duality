@@ -1,21 +1,18 @@
 ﻿using Duality.Editing.Utilities;
 using Duality.Extensions;
 using Duality.Utilities;
-using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Duality.Editing.Windows
 {
-    public static class MouseDataWindow
+    public class MouseDataWindow
+        : EditingWindow
     {
-        public static bool IsEnabled = false;
+        public override string Id => "Mouse Data Window";
 
-        public static void Draw(GameEditor editor)
+        protected override void PerformDraw(GameEditor editor)
         {
-            if (!IsEnabled) return;
-            ImGui.Begin("MouseDataWindow");
-            
             var driver = editor.Driver;
             var mouse = Mouse.GetState();
             var mousePosition = new Vector2(mouse.X, mouse.Y);
@@ -27,8 +24,6 @@ namespace Duality.Editing.Windows
             InspectVector2.Perform("World Position", worldPosition);
             InspectVector2.Perform("Grid Position", gridWorldPosition);
             InspectVector2.Perform("Grid Index", gridIndex);
-
-            ImGui.End();
         }
     }
 }

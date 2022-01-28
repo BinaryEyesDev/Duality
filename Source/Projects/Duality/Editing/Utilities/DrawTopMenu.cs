@@ -11,24 +11,24 @@ namespace Duality.Editing.Utilities
 
             var driver = editor.Driver;
             DrawFileMenu(driver);
-            DrawWindowsMenu();
+            DrawWindowsMenu(editor);
 
             ImGui.EndMainMenuBar();
         }
 
-        private static void DrawWindowsMenu()
+        private static void DrawWindowsMenu(GameEditor editor)
         {
             if (!ImGui.BeginMenu("Windows"))
                 return;
 
             if (ImGui.MenuItem("Mouse Data Window"))
-                MouseDataWindow.IsEnabled = !MouseDataWindow.IsEnabled;
+                editor.GetEditingWindow<MouseDataWindow>().ToggleEnabled();
 
             if (ImGui.MenuItem("World Editing Window"))
-                WorldEditingWindow.IsEnabled = !WorldEditingWindow.IsEnabled;
+                editor.GetEditingWindow<WorldEditingWindow>().ToggleEnabled();
 
             if (ImGui.MenuItem("Texture Registry Window"))
-                TextureRegistryWindow.IsEnabled = !TextureRegistryWindow.IsEnabled;
+                editor.GetEditingWindow<TextureRegistryWindow>().ToggleEnabled();
 
             ImGui.EndMenu();
         }
@@ -40,6 +40,7 @@ namespace Duality.Editing.Utilities
 
             if (ImGui.MenuItem("New"))
             {
+
             }
 
             if (ImGui.MenuItem("Quit"))

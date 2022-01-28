@@ -1,23 +1,23 @@
-﻿using System;
+﻿using System.Numerics;
 using Duality.Data;
 using ImGuiNET;
 
 namespace Duality.Editing.Windows
 {
-    public static class TextureRegistryWindow
+    public class TextureRegistryWindow
+        : EditingWindow
     {
-        public static bool IsEnabled;
         public static TexturePointerMapping CurrentlySelected = TexturePointerMapping.Invalid;
+        public override string Id => "Texture Registry Window";
 
-        public static void Draw(GameEditor editor)
+        protected override void PerformDraw(GameEditor editor)
         {
-            if (!IsEnabled)
-                return;
+            var w = ImGui.GetWindowWidth();
+            var h = ImGui.GetWindowHeight();
+            var size = new Vector2(w, h);
+            ImGui.InputFloat2("Rect", ref size);
 
-            if (!ImGui.Begin("Texture Registry Window"))
-                return;
             ImGui.Image(CurrentlySelected.Pointer, GlobalConfiguration.GuiTileSize);
-
             var icons = editor.TextureIcons;
             foreach (var (objectType, mappingList) in icons)
             {
@@ -33,8 +33,6 @@ namespace Duality.Editing.Windows
                     ImGui.TreePop();
                 }
             }
-
-            ImGui.End();
         }
 
         private static void HandlePressed(TexturePointerMapping mapping)

@@ -2,6 +2,7 @@
 using Duality.Data;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
+using Orca.Logging;
 
 namespace Duality.Systems
 {
@@ -17,14 +18,15 @@ namespace Duality.Systems
             driver.EditorMouse.Transform.Position = gridPosition;
             if (MouseInput.WasButtonJustPressed(0))
             {
+                if (driver.Editor.IsMouseCaptured)
+                    return;
+
                 var texture = driver.Editor.GetSelectedTileTexture();
                 if (texture == null) 
                     return;
 
                 var sprite = GenerateSprite.Perform(driver, texture);
-                var tilePosition = gridPosition;
-                sprite.Transform.Position = tilePosition;
-
+                sprite.Transform.Position = gridPosition;
             }
         }
     }

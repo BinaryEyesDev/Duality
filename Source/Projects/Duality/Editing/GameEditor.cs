@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Duality.Editing.Utilities;
 using Duality.Editing.Windows;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,13 @@ namespace Duality.Editing
         public GameDriver Driver { get; }
         public ImGUIRenderer Renderer { get; }
         public Dictionary<string, List<TexturePointerMapping>> TextureIcons { get; }
+        public bool IsMouseCaptured => _windows.Values.Any(entry => entry.IsMouseHovering);
+
+        public T GetEditingWindow<T>() where T : EditingWindow
+        {
+            var found = _windows.TryGetValue(typeof(T), out var window);
+            return found ? (T) window : null;
+        }
 
         public Texture2D GetSelectedTileTexture()
         {
@@ -42,10 +50,9 @@ namespace Duality.Editing
         {
             Renderer.BeginLayout(time);
             DrawTopMenu.Perform(this);
-            MouseDataWindow.Draw(this);
-            WorldEditingWindow.Draw(this);
-            TextureRegistryWindow.Draw(this);
-            
+            foreach (var window in _windows.Values)
+                window.Draw(this);
+
             Renderer.EndLayout();
         }
 
@@ -54,7 +61,18 @@ namespace Duality.Editing
             Driver = driver;
             Renderer = new ImGUIRenderer(driver).Initialize().RebuildFontAtlas();
             TextureIcons = LoadTextureIcons.Perform(driver, Renderer);
+            AddWindow<MouseDataWindow>();
+            AddWindow<WorldEditingWindow>();
+            AddWindow<TextureRegistryWindow>();
         }
+
+        private void AddWindow<T>() where T : EditingWindow, new()
+        {
+            var window = new T();
+            _windows.Add(typeof(T), window);
+        }
+
+        private readonly Dictionary<Type, EditingWindow> _windows = new();
     }
 
     public readonly struct TexturePointerMapping
