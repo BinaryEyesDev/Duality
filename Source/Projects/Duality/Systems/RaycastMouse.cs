@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Duality.Components;
-using Duality.Editing.Windows;
+using Duality.Editing;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
 
@@ -22,6 +22,10 @@ namespace Duality.Systems
                 var node = driver.World[gridIndex];
                 var building = node.Layers.FirstOrDefault(entry => entry != null && entry.Type.Contains("Building"));
                 building?.FlipHorizontal();
+                if (building != null) return;
+
+                var grassTile = node.Layers.FirstOrDefault(entry => entry != null && entry.Type.Contains("Grass"));
+                grassTile?.Rotate90();
             }
 
             if (MouseInput.WasButtonJustPressed(0))
@@ -30,9 +34,9 @@ namespace Duality.Systems
                 if (!driver.Editor.GetSelectedElement().IsValid) return;
                 
                 var type = driver.Editor.GetSelectedElement().TextureType;
-                TileEditingWindow.CurrentTileLayer = DetermineTypeLayerId(type);
+                GameViewManager.CurrentTileLayer = DetermineTypeLayerId(type);
 
-                var layerId = TileEditingWindow.CurrentTileLayer;
+                var layerId = GameViewManager.CurrentTileLayer;
                 var texture = driver.Editor.GetSelectedTileTexture();
                 var shouldRemove = texture == null || texture == driver.World.GetCellSprite(gridIndex, layerId)?.Image;
                 if (shouldRemove)
@@ -53,7 +57,7 @@ namespace Duality.Systems
                 case "Grass": return 2;
                 case "Nature": return 3;
                 case "Buildings": return 4;
-                default: return TileEditingWindow.CurrentTileLayer;
+                default: return GameViewManager.CurrentTileLayer;
             }
         }
     }

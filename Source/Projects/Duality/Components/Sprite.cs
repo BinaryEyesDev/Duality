@@ -22,6 +22,13 @@ namespace Duality.Components
         public event EventHandler OnDisabled;
         public Vector2 Origin => Size*Pivot;
 
+        public void Rotate90()
+        {
+            Transform.Rotation += 90.0f;
+            if (Transform.Rotation > 360.0f)
+                Transform.Rotation -= 360.0f;
+        }
+
         public void FlipHorizontal()
         {
             var contains = (Effects & SpriteEffects.FlipHorizontally) != 0;

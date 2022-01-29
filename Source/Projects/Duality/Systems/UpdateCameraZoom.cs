@@ -1,6 +1,5 @@
-﻿using System;
-using Duality.Components;
-using Duality.Editing.Windows;
+﻿using Duality.Components;
+using Duality.Editing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -19,10 +18,10 @@ namespace Duality.Systems
             if (keyboard.IsKeyDown(Keys.LeftAlt))
             {
                 var scrollDelta = MouseInput.GetScrollDelta();
-                TileEditingWindow.SetZoomFactory(TileEditingWindow.CameraZoomFactor + scrollDelta*0.001f);
+                GameViewManager.SetZoomFactory(GameViewManager.CameraZoomFactor + scrollDelta*0.001f);
             }
 
-            NextZoom = TileEditingWindow.CameraZoomFactor;
+            NextZoom = GameViewManager.CameraZoomFactor;
             camera.ZoomFactor = MathHelper.Lerp(camera.ZoomFactor, NextZoom, FrameTime.Elapsed*2.0f);
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Duality.Data;
-using Duality.Editing.Windows;
+using Duality.Editing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,7 +11,7 @@ namespace Duality.Components
 
         public void Draw(GameDriver driver)
         {
-            if (!TileEditingWindow.ShowGrid) return;
+            if (!GameViewManager.ShowGrid) return;
 
             var spriteBatch = driver.SpriteBatch;
 

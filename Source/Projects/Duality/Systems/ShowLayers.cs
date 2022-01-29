@@ -1,4 +1,5 @@
 ﻿using Duality.Data;
+using Duality.Editing;
 using Duality.Editing.Windows;
 
 namespace Duality.Systems
@@ -8,7 +9,7 @@ namespace Duality.Systems
     {
         public override void Perform(GameDriver driver)
         {
-            if (_wasShowing == TileEditingWindow.ShowAllLayers && _layerId == TileEditingWindow.CurrentTileLayer)
+            if (_wasShowing == GameViewManager.ShowAllLayers && _layerId == GameViewManager.CurrentTileLayer)
                 return;
 
             for (var row = 0; row < GlobalConfiguration.MapSize.X; row++)
@@ -27,17 +28,17 @@ namespace Duality.Systems
                 }
             }
 
-            _layerId = TileEditingWindow.CurrentTileLayer;
-            _wasShowing = TileEditingWindow.ShowAllLayers;
+            _layerId = GameViewManager.CurrentTileLayer;
+            _wasShowing = GameViewManager.ShowAllLayers;
         }
 
         private static bool CheckLayerVisibility(int layerIndex)
         {
-            if (TileEditingWindow.ShowAllLayers)
+            if (GameViewManager.ShowAllLayers)
                 return true;
 
             var layerId = layerIndex + 1;
-            return layerId == TileEditingWindow.CurrentTileLayer;
+            return layerId == GameViewManager.CurrentTileLayer;
         }
 
         private int _layerId;

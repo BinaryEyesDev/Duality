@@ -25,12 +25,12 @@ namespace Duality.Editing
 
         public TexturePointerMapping GetSelectedElement()
         {
-            return TileEditingWindow.CurrentlySelected;
+            return TextureSelectionManager.CurrentlySelected;
         }
 
         public Texture2D GetSelectedTileTexture()
         {
-            var mapping = TileEditingWindow.CurrentlySelected;
+            var mapping = TextureSelectionManager.CurrentlySelected;
             if (!mapping.IsValid)
                 return null;
 
@@ -72,7 +72,9 @@ namespace Duality.Editing
             TextureIcons = LoadTextureIcons.Perform(driver, Renderer);
             AddWindow<MouseDataWindow>();
             AddWindow<WorldEditingWindow>();
+            AddWindow<SelectedPreviewWindow>();
             AddWindow<TileEditingWindow>();
+            AddWindow<CreaturesEditingWindow>();
         }
 
         private void AddWindow<T>() where T : EditingWindow, new()

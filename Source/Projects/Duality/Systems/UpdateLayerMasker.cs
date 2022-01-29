@@ -1,4 +1,5 @@
 ﻿using Duality.Data;
+using Duality.Editing;
 using Duality.Editing.Windows;
 
 namespace Duality.Systems
@@ -8,9 +9,9 @@ namespace Duality.Systems
     {
         public override void Perform(GameDriver driver)
         {
-            var currentLayer = TileEditingWindow.CurrentTileLayer;
+            var currentLayer = GameViewManager.CurrentTileLayer;
             var masker = driver.LayerMasker;
-            masker.Sprite.IsEnabled = currentLayer > 1 && TileEditingWindow.ShowLayerMask;
+            masker.Sprite.IsEnabled = currentLayer > 1 && GameViewManager.ShowLayerMask;
             masker.Sprite.ZIndex = currentLayer*GlobalConfiguration.SpriteLayerStep - 0.01f;
         }
     }
