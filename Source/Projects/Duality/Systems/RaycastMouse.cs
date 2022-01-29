@@ -67,6 +67,7 @@ namespace Duality.Systems
             switch (animalType)
             {
                 case "Fish": FishSpawner.SpawnCreature(spawnData); return;
+                case "Turtle": TurtleSpawner.SpawnCreature(spawnData); return;
                 case "Axolotl": AxolotlSpawner.SpawnCreature(spawnData); return;
                 case "Human": HumanSpawner.SpawnCreature(spawnData); return;
             }

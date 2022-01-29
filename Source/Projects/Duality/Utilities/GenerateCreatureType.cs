@@ -9,6 +9,9 @@ namespace Duality.Utilities
             if (info.TextureName.Contains("Fish"))
                 return "Fish";
 
+            if (info.TextureName.Contains("Turtle"))
+                return "Turtle";
+
             if (info.TextureName.Contains("Axolotl"))
                 return "Axolotl";
 
