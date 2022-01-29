@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Duality.Components;
 using Duality.Data;
+using Duality.Editing;
 using Duality.Extensions;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
@@ -45,6 +46,7 @@ namespace Duality.Agents
         public static DirectionInfo? LookForTarget(Transform2D transform)
         {
             DirectionInfo? direction = null;
+            var waterLayerIndex = GameViewManager.CalculateLayerIndex("Water");
             var cellPosition = CalculateGridFromWorld.GetGridWorldPosition(transform.Position);
             var cell = CalculateGridFromWorld.GetGridIndex(cellPosition);
             var adjacentIndices = GenerateAdjacentDirectionInfos.Perform(cell);
@@ -54,7 +56,8 @@ namespace Duality.Agents
                 if (!potential.Index.IsValid) continue;
 
                 var potentialNode = GameDriver.Instance.World[potential.Index];
-                if (potentialNode.Layers[0] == null || potentialNode.Layers[0].Id.SubGroup != "Water") continue;
+                var waterLayer = potentialNode.Layers[waterLayerIndex];
+                if (waterLayer is not {Id: {SubGroup: "Water"}}) continue;
                 if (potentialNode.Layers.Any(entry => entry is {Id: {SubGroup: "Grass"}})) continue;
                 if (!CheckHasGrassEdgeNear(potential)) continue;
 

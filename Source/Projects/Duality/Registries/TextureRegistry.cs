@@ -50,7 +50,8 @@ namespace Duality.Registries
             {
                 {"Tiles", LoadTextures("Tiles")},
                 {"Objects", LoadTextures("Objects")},
-                {"Creatures", LoadTextures("Creatures")}
+                {"Creatures", LoadTextures("Creatures")},
+                {"Animations", LoadTextures("Animations")}
             };
         }
 

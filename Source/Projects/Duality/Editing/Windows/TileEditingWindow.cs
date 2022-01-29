@@ -21,7 +21,8 @@ namespace Duality.Editing.Windows
             var iconMap = editor.IconMap;
             foreach (var groupEntry in iconMap)
             {
-                if (groupEntry.Key == "Creatures") continue;
+                if (groupEntry.Key is "Creatures" or "Animations") continue;
+
                 foreach (var subGroupEntry in groupEntry.Value)
                 {
                     if (!ImGui.TreeNode(subGroupEntry.Key)) continue;

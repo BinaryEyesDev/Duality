@@ -2,6 +2,7 @@
 {
     public readonly struct GridIndex
     {
+        public static GridIndex Invalid => new(-1, -1);
         public readonly int Column;
         public readonly int Row;
         public bool IsValid => CheckValid();

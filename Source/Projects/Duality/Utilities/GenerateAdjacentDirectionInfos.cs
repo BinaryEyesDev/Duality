@@ -7,6 +7,17 @@ namespace Duality.Utilities
 {
     public static class GenerateAdjacentDirectionInfos
     {
+        public static List<DirectionInfo> CardinalOnly(GridIndex center)
+        {
+            var info = new DirectionInfo[4];
+            info[0] = new DirectionInfo(center + new GridIndex(-1, +0), 270.0f);//left
+            info[1] = new DirectionInfo(center + new GridIndex(+0, +1), 180.0f);//bottom
+            info[2] = new DirectionInfo(center + new GridIndex(+1, +0), 90.0f);//right
+            info[3] = new DirectionInfo(center + new GridIndex(+0, -1), 0.0f);//top
+
+            return info.ToList();
+        }
+
         public static List<DirectionInfo> Perform(GridIndex center)
         {
             var info = new DirectionInfo[8];

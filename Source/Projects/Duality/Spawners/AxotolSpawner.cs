@@ -15,7 +15,10 @@ namespace Duality.Spawners
         public static void SpawnCreature(TileEventArgs data)
         {
             if (!ValidateNearGrassEdge(data))
+            {
+                GameDriver.Instance.MessageDisplay.AddDireMessage("Axolotls can only be spawned near land!");
                 return;
+            }
 
             if (CurrentPopulationCount == 4)
             {
@@ -24,7 +27,7 @@ namespace Duality.Spawners
             }
 
             Log.Message("Spawning Axolotl");
-            GameDriver.Instance.MessageDisplay.AddMessage("Spawning Axototl");
+            GameDriver.Instance.MessageDisplay.AddMessage("Spawning Axolotl");
 
             var image = GameDriver.Instance.TextureRegistry.FindGameElementTemplateByName("Creatures", "Water", "Axolotl_1");
             var sprite = GenerateSprite.Perform(image);

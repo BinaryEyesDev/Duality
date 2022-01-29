@@ -31,8 +31,8 @@ namespace Duality.Editing
                 case "Water": return 2;
                 case "Grass": return 3;
                 case "Nature": return 4;
-                case "Buildings": return 6;
-                case "Humans": return 7;
+                case "Buildings": return 5;
+                case "Humans": return 6;
                 default: return CurrentTileLayer;
             }
         }
