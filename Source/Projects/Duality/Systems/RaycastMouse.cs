@@ -28,8 +28,12 @@ namespace Duality.Systems
                 {
                     if (node.Layers[i] == null) continue;
                     if (node.Layers[i].Id.Group == "Creatures") continue;
-                    
-                    node.Layers[i].Rotate90();
+
+                    if (node.Layers[i].Id.Group == "Buildings")
+                        node.Layers[i].FlipHorizontal();
+                    else
+                        node.Layers[i].Rotate90();
+
                     break;
                 }
             }

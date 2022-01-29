@@ -113,6 +113,7 @@ namespace Duality.Agents
 
             var grassLayerIndex = GameViewManager.CalculateLayerIndex("Grass");
             var buildingLayerIndex = GameViewManager.CalculateLayerIndex("Buildings");
+            var natureLayerIndex = GameViewManager.CalculateLayerIndex("Nature");
 
             var cellPosition = CalculateGridFromWorld.GetGridWorldPosition(transform.Position);
             var cell = CalculateGridFromWorld.GetGridIndex(cellPosition);
@@ -130,6 +131,10 @@ namespace Duality.Agents
 
                 var buildingLayer = adjacent.Layers[buildingLayerIndex];
                 if (buildingLayer != null) continue;
+
+                var natureLayer = adjacent.Layers[natureLayerIndex];
+                if (natureLayer != null && natureLayer.Id.Name.Contains("Tree"))
+                    continue;
 
                 direction = adjacentInfo;
             }

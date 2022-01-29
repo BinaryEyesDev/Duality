@@ -38,6 +38,9 @@ namespace Duality.Data
             if (Layers[layerIndex] == null)
                 Layers[layerIndex] = GenerateSprite.Perform(texture);
 
+            if (id.Group == "Objects")
+                Layers[layerIndex].Pivot = new Vector2(0.5f, 1.0f);
+
             Layers[layerIndex].Id = id;
             Layers[layerIndex].Image = texture;
             Layers[layerIndex].ZIndex = GlobalConfiguration.GetZIndexElements(layerId);
