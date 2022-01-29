@@ -8,9 +8,13 @@ namespace Duality.Components
 {
     public class GameUI
     {
+        public float Progress;
+
         public void Update()
         {
-
+            Progress += FrameTime.ScaledElapsed*0.03f;
+            if (Progress > 1.0f)
+                Progress = 1.0f;
         }
 
         public void Draw()
@@ -21,10 +25,7 @@ namespace Duality.Components
             var pos = new Vector2(5.0f, 25.0f);
 
             _scoreBarFill.Transform.Position = pos;
-            _scoreBarFill.Transform.Scale += new Vector2(FrameTime.ScaledElapsed, 0.0f)*0.03f;
-            if (_scoreBarFill.Transform.Scale.X > 1.0f)
-                _scoreBarFill.Transform.Scale.X = 1.0f;
-
+            _scoreBarFill.Transform.Scale = new Vector2(Progress, 0.75f);
             _renderer.DrawSprite(_scoreBarFill);
 
             _scoreBarFrame.Transform.Position = pos;

@@ -28,6 +28,7 @@ namespace Duality
             if (_flashTimeLeft > 0.0f) return;
 
             InProcess = false;
+            GameDriver.Instance.UI.Progress = 0.0f;
             foreach (var agent in GameDriver.Instance.Agents)
             {
                 agent.State = AgentState.Dead;
