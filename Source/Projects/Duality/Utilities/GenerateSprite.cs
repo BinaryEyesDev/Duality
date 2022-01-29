@@ -9,12 +9,13 @@ namespace Duality.Utilities
 {
     public static class GenerateSprite
     {
-        public static Sprite Perform(GameDriver driver, string texturePath)
+        public static Sprite Perform(string texturePath)
         {
             try
             {
+                var driver = GameDriver.Instance;
                 var texture = driver.Content.Load<Texture2D>(texturePath);
-                return Perform(driver, texture);
+                return Perform(texture);
             }
             catch (Exception e)
             {
@@ -23,9 +24,10 @@ namespace Duality.Utilities
             }
         }
 
-        public static Sprite Perform(GameDriver driver, Texture2D texture)
+        public static Sprite Perform(Texture2D texture)
         {
             Log.Message($"GeneratingSprite: texture={texture.Name}");
+            var driver = GameDriver.Instance;
             var sprite = new Sprite
             {
                 IsEnabled = true,

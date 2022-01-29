@@ -5,10 +5,10 @@ namespace Duality.Utilities
 {
     public static class GenerateWorldGrid
     {
-        public static WorldGrid Perform(GameDriver driver)
+        public static WorldGrid Perform()
         {
             Log.Message("GeneratingWorldGrid");
-            return new WorldGrid(driver);
+            return new WorldGrid();
         }
     }
 }

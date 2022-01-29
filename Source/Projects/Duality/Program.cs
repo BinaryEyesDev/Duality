@@ -41,12 +41,11 @@ namespace Duality
                 driver.Sprites = new List<Sprite>();
                 driver.Agents = new List<IAgent>();
 
-                driver.LayerMasker = GenerateLayerMasker.Perform(driver);
-                driver.Player = GeneratePlayer.Perform(driver);
-                driver.WorldGrid = GenerateWorldGrid.Perform(driver);
-                driver.EditorMouse = GenerateEditorMouse.Perform(driver);
-
-                GenerateBackground(driver);
+                driver.LayerMasker = GenerateLayerMasker.Perform();
+                driver.Player = GeneratePlayer.Perform();
+                driver.WorldGrid = GenerateWorldGrid.Perform();
+                driver.EditorMouse = GenerateEditorMouse.Perform();
+                GenerateBackground();
                 
                 driver.UpdateSystems = GenerateUpdateSystems.Perform();
                 driver.Window.Title = $"Duality {GameVersion.Get()}";
@@ -64,10 +63,10 @@ namespace Duality
             Log.Dispose();
         }
 
-        private static void GenerateBackground(GameDriver driver)
+        private static void GenerateBackground()
         {
             Log.Message("GeneratingBackground");
-            var sprite = GenerateSprite.Perform(driver, "Textures/Background");
+            var sprite = GenerateSprite.Perform("Textures/Background");
             sprite.Type = "Background";
             sprite.Transform.Scale = Vector2.One*8.0f;
             sprite.ZIndex = GlobalConfiguration.BackgroundZIndex;

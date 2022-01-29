@@ -31,11 +31,11 @@ namespace Duality.Components
             }
         }
 
-        public WorldGrid(GameDriver driver)
+        public WorldGrid()
         {
             _tileSize = GlobalConfiguration.TileSize;
 
-            _image = new Texture2D(driver.GraphicsDevice, 1, 1);
+            _image = new Texture2D(GameDriver.Instance.GraphicsDevice, 1, 1);
             _image.SetData(new[]{Color.White});
 
             _imageSize = new Vector2(_image.Width, _image.Height);

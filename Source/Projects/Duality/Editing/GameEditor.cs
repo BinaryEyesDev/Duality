@@ -32,7 +32,7 @@ namespace Duality.Editing
             return TextureSelectionManager.CurrentlySelected;
         }
 
-        public Texture2D GetSelectedTileTexture()
+        public Texture2D GetSelectedTexture()
         {
             var mapping = TextureSelectionManager.CurrentlySelected;
             return !mapping.IsValid 

@@ -11,12 +11,13 @@ namespace Duality.Data
 
         public Sprite GetSprite(int layerId)
         {
-            return layerId is < 1 or > GlobalConfiguration.LayerCount ? null : Layers[layerId - 1];
+            return ValidateLayerId(layerId) ? Layers[layerId - 1] : null;
         }
 
         public void RemoveSprite(int layerId)
         {
-            if (layerId is < 1 or > GlobalConfiguration.LayerCount) return;
+            if (!ValidateLayerId(layerId))
+                return;
             
             var layerIndex = layerId - 1;
             if (Layers[layerIndex] == null) return;
@@ -27,18 +28,24 @@ namespace Duality.Data
 
         public bool AddSprite(Texture2D texture, int layerId, Vector2 pos, string type)
         {
-            if (layerId is < 1 or > GlobalConfiguration.LayerCount) return false;
+            if (!ValidateLayerId(layerId)) 
+                return false;
 
             var layerIndex = layerId - 1;
             if (Layers[layerIndex] == null)
-                Layers[layerIndex] = GenerateSprite.Perform(GameDriver.Instance, texture);
+                Layers[layerIndex] = GenerateSprite.Perform(texture);
 
             Layers[layerIndex].Type = type;
             Layers[layerIndex].Image = texture;
-            Layers[layerIndex].ZIndex = layerId*GlobalConfiguration.SpriteLayerStep;
+            Layers[layerIndex].ZIndex = GlobalConfiguration.GetZIndexElements(layerId);
             Layers[layerIndex].Transform.Position = pos;
 
             return true;
+        }
+
+        private bool ValidateLayerId(int id)
+        {
+            return id is >= 1 and < GlobalConfiguration.LayerCount;
         }
 
         public GameNode()

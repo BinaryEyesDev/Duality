@@ -21,6 +21,16 @@ namespace Duality.Data
         public static readonly NuVector2 GuiTileSize = TileSize.ToNuVector2();
         public static readonly NuVector2 GuiTileIconSize = GuiTileSize*0.5f;
 
+        public static float GetZIndexCreatures(int layerId)
+        {
+            return layerId*SpriteLayerStep - SpriteLayerUnderStep;
+        }
+
+        public static float GetZIndexElements(int layerId)
+        {
+            return layerId*SpriteLayerStep;
+        }
+
         public static float LockCameraZoom(float value)
         {
             return value < MinimumCameraZoomFactor ? MinimumCameraZoomFactor :

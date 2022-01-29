@@ -29,7 +29,7 @@ namespace Duality.Spawners
             GameDriver.Instance.MessageDisplay.AddMessage("Fish Spawned");
 
             var image = GameDriver.Instance.TextureRegistry.FindGameElementTemplateByName("Creatures", "Water", "Fish_1");
-            var sprite = GenerateSprite.Perform(GameDriver.Instance, image);
+            var sprite = GenerateSprite.Perform(image);
             sprite.Transform.Position = data.WorldPosition;
             sprite.ZIndex = (data.LayerId*GlobalConfiguration.SpriteLayerStep) - GlobalConfiguration.SpriteLayerUnderStep;
             var fish = new Fish

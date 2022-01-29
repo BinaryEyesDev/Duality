@@ -6,10 +6,10 @@ namespace Duality.Utilities
 {
     public static class GenerateLayerMasker
     {
-        public static LayerDarkMask Perform(GameDriver driver)
+        public static LayerDarkMask Perform()
         {
             Log.Message("GeneratingLayerMasker");
-            var sprite = GenerateSprite.Perform(driver, "Textures/Masker");
+            var sprite = GenerateSprite.Perform("Textures/Masker");
             sprite.Transform.Scale = Vector2.One*1000.0f;
 
             return new LayerDarkMask
