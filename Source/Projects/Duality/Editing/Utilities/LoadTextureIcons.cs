@@ -4,7 +4,7 @@ using MonoGame.ImGui.Standard;
 
 namespace Duality.Editing.Utilities
 {
-    using TextureMappingMap = Dictionary<string, List<TexturePointerMapping>>;
+    using TextureMappingMap = Dictionary<string, List<GameElementTemplateInfo>>;
     using TextureMap = Dictionary<string, List<Texture2D>>;
 
     public static class LoadTextureIcons
@@ -12,8 +12,8 @@ namespace Duality.Editing.Utilities
         public static TextureMappingMap Perform(GameDriver driver, ImGUIRenderer renderer)
         {
             var map = new TextureMappingMap();
-            GenerateIcons(map, renderer, driver.TextureRegistry.Tiles);
-            GenerateIcons(map, renderer, driver.TextureRegistry.Objects);
+            GenerateIcons(map, renderer, driver.TextureRegistry.Groupings["Tiles"]);
+            GenerateIcons(map, renderer, driver.TextureRegistry.Groupings["Objects"]);
 
             return map;
         }
@@ -23,11 +23,11 @@ namespace Duality.Editing.Utilities
             foreach (var (typeName, textureList) in textures)
             {
                 if (!map.ContainsKey(typeName))
-                    map.Add(typeName, new List<TexturePointerMapping>());
+                    map.Add(typeName, new List<GameElementTemplateInfo>());
 
                 foreach (var entry in textureList)
                 {
-                    var mapping = new TexturePointerMapping(typeName, entry.Name, renderer.BindTexture(entry));
+                    var mapping = new GameElementTemplateInfo(typeName, entry.Name, renderer.BindTexture(entry));
                     map[typeName].Add(mapping);
                 }
             }

@@ -45,10 +45,10 @@ namespace Duality.Editing.Windows
             ImGui.SetWindowSize(size);
         }
 
-        private static void HandlePressed(TexturePointerMapping mapping)
+        private static void HandlePressed(GameElementTemplateInfo mapping)
         {
             TextureSelectionManager.CurrentlySelected = 
-                TextureSelectionManager.CurrentlySelected.Pointer == mapping.Pointer ? TexturePointerMapping.Invalid : mapping;
+                TextureSelectionManager.CurrentlySelected.Pointer == mapping.Pointer ? GameElementTemplateInfo.Invalid : mapping;
         }
     }
 }

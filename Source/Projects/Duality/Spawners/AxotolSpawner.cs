@@ -26,7 +26,8 @@ namespace Duality.Spawners
             Log.Message("Spawning Axolotl");
             GameDriver.Instance.MessageDisplay.AddMessage("Spawning Axototl");
 
-            var image = GameDriver.Instance.TextureRegistry.FindCreature("Water", "Axolotl_1");
+            var image = GameDriver.Instance.TextureRegistry.FindGameElementTemplateByName("Creatures", "Water", "Axolotl_1");
+
             var sprite = GenerateSprite.Perform(GameDriver.Instance, image);
             sprite.Transform.Position = data.WorldPosition;
             sprite.ZIndex = (data.LayerId * GlobalConfiguration.SpriteLayerStep) - GlobalConfiguration.SpriteLayerUnderStep;

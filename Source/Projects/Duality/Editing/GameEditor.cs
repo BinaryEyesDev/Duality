@@ -14,7 +14,7 @@ namespace Duality.Editing
     {
         public GameDriver Driver { get; }
         public ImGUIRenderer Renderer { get; }
-        public Dictionary<string, List<TexturePointerMapping>> TextureIcons { get; }
+        public Dictionary<string, List<GameElementTemplateInfo>> TextureIcons { get; }
         public bool IsMouseCaptured => _windows.Values.Any(entry => entry.IsMouseHovering);
 
         public T GetEditingWindow<T>() where T : EditingWindow
@@ -23,7 +23,7 @@ namespace Duality.Editing
             return found ? (T) window : null;
         }
 
-        public TexturePointerMapping GetSelectedElement()
+        public GameElementTemplateInfo GetSelectedElement()
         {
             return TextureSelectionManager.CurrentlySelected;
         }
@@ -31,14 +31,7 @@ namespace Duality.Editing
         public Texture2D GetSelectedTileTexture()
         {
             var mapping = TextureSelectionManager.CurrentlySelected;
-            if (!mapping.IsValid)
-                return null;
-
-            var tile = Driver.TextureRegistry.FindTile(mapping.TextureType, mapping.TextureName);
-            if (tile != null)
-                return tile;
-
-            return Driver.TextureRegistry.FindObject(mapping.TextureType, mapping.TextureName);
+            return !mapping.IsValid ? null : Driver.TextureRegistry.FindGameElementTemplateByPath("Tiles", mapping.SubGroupType, mapping.TexturePath);
         }
 
         public void Dispose()
@@ -86,18 +79,18 @@ namespace Duality.Editing
         private readonly Dictionary<Type, EditingWindow> _windows = new();
     }
 
-    public readonly struct TexturePointerMapping
+    public readonly struct GameElementTemplateInfo
     {
-        public static TexturePointerMapping Invalid => new("", "", IntPtr.Zero);
-        public readonly string TextureType;
-        public readonly string TextureName;
+        public static GameElementTemplateInfo Invalid => new("", "", IntPtr.Zero);
+        public readonly string SubGroupType;
+        public readonly string TexturePath;
         public readonly IntPtr Pointer;
         public bool IsValid => Pointer != IntPtr.Zero;
 
-        public TexturePointerMapping(string textureType, string textureName, IntPtr pointer)
+        public GameElementTemplateInfo(string textureType, string textureName, IntPtr pointer)
         {
-            TextureType = textureType;
-            TextureName = textureName;
+            SubGroupType = textureType;
+            TexturePath = textureName;
             Pointer = pointer;
         }
     }

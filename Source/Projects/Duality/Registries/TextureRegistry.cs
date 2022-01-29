@@ -1,43 +1,84 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 
 namespace Duality.Registries
 {
     using TextureMap = Dictionary<string, List<Texture2D>>;
+    using TileGroupingsMap = Dictionary<string, Dictionary<string, List<Texture2D>>>;
 
     public class TextureRegistry
     {
+        public TileGroupingsMap Groupings;
         public readonly TextureMap Tiles;
         public readonly TextureMap Creatures;
         public readonly TextureMap Objects;
 
-        public Texture2D FindCreature(string type, string name)
+        public Texture2D FindGameElementTemplateByPath(string group, string subGroup, string path)
         {
-            var typeFound = Creatures.TryGetValue(type, out var textures);
-            return typeFound ? textures.FirstOrDefault(entry => Path.GetFileNameWithoutExtension(entry.Name) == name) : null;
+            var subGroupMap = FindSubGroup(group, subGroup);
+            return subGroupMap.FirstOrDefault(entry => entry.Name == path);
         }
 
-        public Texture2D FindObject(string type, string name)
+        public Texture2D FindGameElementTemplateByName(string group, string subGroup, string name)
         {
-            var typeFound = Objects.TryGetValue(type, out var textures);
-            return typeFound ? textures.FirstOrDefault(entry => entry.Name == name) : null;
+            var subGroupMap = FindSubGroup(group, subGroup);
+            return subGroupMap.FirstOrDefault(entry => Path.GetFileNameWithoutExtension(entry.Name) == name);
         }
 
-        public Texture2D FindTile(string type, string name)
+        private List<Texture2D> FindSubGroup(string group, string subGroup)
         {
-            var typeFound = Tiles.TryGetValue(type, out var textures);
-            return typeFound ? textures.FirstOrDefault(entry => entry.Name == name) : null;
+            var foundGroup = Groupings.TryGetValue(group, out var groupMap);
+            if (!foundGroup)
+            {
+                Log.Warning($"failed to locate requested element group: {group}");
+                return null;
+            }
+
+            var foundSubGroup = groupMap.TryGetValue(subGroup, out var subGroupMap);
+            if (!foundSubGroup)
+            {
+                Log.Warning($"failed to locate requested element sub-group: {subGroupMap}");
+                return null;
+            }
+
+            return subGroupMap;
         }
+
+        //public Texture2D FindCreature(string type, string name)
+        //{
+        //    var typeFound = Creatures.TryGetValue(type, out var textures);
+        //    return typeFound ? textures.FirstOrDefault(entry => Path.GetFileNameWithoutExtension(entry.Name) == name) : null;
+        //}
+
+        //public Texture2D FindObject(string type, string name)
+        //{
+        //    var typeFound = Objects.TryGetValue(type, out var textures);
+        //    return typeFound ? textures.FirstOrDefault(entry => entry.Name == name) : null;
+        //}
+
+        //public Texture2D FindTile(string type, string name)
+        //{
+        //    var typeFound = Tiles.TryGetValue(type, out var textures);
+        //    return typeFound ? textures.FirstOrDefault(entry => entry.Name == name) : null;
+        //}
 
         public TextureRegistry(GameDriver driver)
         {
             _driver = driver;
-            Tiles = LoadTextures("Tiles");
-            Creatures = LoadTextures("Creatures");
-            Objects = LoadTextures("Objects");
+            Groupings = new TileGroupingsMap
+            {
+                {"Tiles", LoadTextures("Tiles")},
+                {"Objects", LoadTextures("Objects")},
+                {"Creatures", LoadTextures("Creatures")}
+            };
+
+            //Tiles = LoadTextures("Tiles");
+            //Creatures = LoadTextures("Creatures");
+            //Objects = LoadTextures("Objects");
         }
 
         private static TextureMap LoadTextures(string objectType)

@@ -6,7 +6,7 @@ namespace Duality.Editing.Windows
     public class CreaturesEditingWindow
         : EditingWindow
     {
-        public static TexturePointerMapping CurrentlySelected = TexturePointerMapping.Invalid;
+        public static GameElementTemplateInfo CurrentlySelected = GameElementTemplateInfo.Invalid;
         public override string Id => "Creatures Editing Window";
 
         protected override void PerformPreDraw(GameEditor editor)
@@ -31,9 +31,9 @@ namespace Duality.Editing.Windows
             ImGui.SetWindowSize(size);
         }
 
-        private static void HandlePressed(TexturePointerMapping mapping)
+        private static void HandlePressed(GameElementTemplateInfo mapping)
         {
-            CurrentlySelected = CurrentlySelected.Pointer == mapping.Pointer ? TexturePointerMapping.Invalid : mapping;
+            CurrentlySelected = CurrentlySelected.Pointer == mapping.Pointer ? GameElementTemplateInfo.Invalid : mapping;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Duality.Systems
                 if (driver.Editor.IsMouseCaptured) return;
                 if (!driver.Editor.GetSelectedElement().IsValid) return;
                 
-                var type = driver.Editor.GetSelectedElement().TextureType;
+                var type = driver.Editor.GetSelectedElement().SubGroupType;
                 GameViewManager.CurrentTileLayer = DetermineTypeLayerId(type);
 
                 var layerId = GameViewManager.CurrentTileLayer;

@@ -2,6 +2,6 @@
 {
     public static class TextureSelectionManager
     {
-        public static TexturePointerMapping CurrentlySelected = TexturePointerMapping.Invalid;
+        public static GameElementTemplateInfo CurrentlySelected = GameElementTemplateInfo.Invalid;
     }
 }
