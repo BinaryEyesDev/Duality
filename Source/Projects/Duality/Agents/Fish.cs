@@ -36,7 +36,7 @@ namespace Duality.Agents
 
         public void SolveWorldActions(GameDriver driver)
         {
-            if (_targetInfo == null) _targetInfo = LookForTarget(Transform);
+            _targetInfo ??= LookForTarget(Transform);
             if (_targetInfo == null) return;
 
             var info = _targetInfo.Value;
@@ -55,7 +55,7 @@ namespace Duality.Agents
             DirectionInfo? direction = null;
             var cellPosition = CalculateGridFromWorld.GetGridWorldPosition(transform.Position);
             var cell = CalculateGridFromWorld.GetGridIndex(cellPosition);
-            var adjacentIndices = GenerateAdjacentDirection.Perform(cell);
+            var adjacentIndices = GenerateAdjacentDirectionInfos.Perform(cell);
             while (adjacentIndices.Count > 0 && direction == null)
             {
                 var adjacentInfo = adjacentIndices.PopRandom();

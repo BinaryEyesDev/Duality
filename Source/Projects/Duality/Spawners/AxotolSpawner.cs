@@ -46,7 +46,7 @@ namespace Duality.Spawners
                 return false;
 
             var validCount = 0;
-            var adjacentInfos = GenerateAdjacentDirection.Perform(data.Index);
+            var adjacentInfos = GenerateAdjacentDirectionInfos.Perform(data.Index);
             foreach (var info in adjacentInfos)
             {
                 var node = GameDriver.Instance.World[info.Index];

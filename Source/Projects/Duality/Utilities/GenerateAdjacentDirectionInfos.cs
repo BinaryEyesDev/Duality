@@ -5,7 +5,7 @@ using Duality.Data;
 
 namespace Duality.Utilities
 {
-    public static class GenerateAdjacentDirection
+    public static class GenerateAdjacentDirectionInfos
     {
         public static List<DirectionInfo> Perform(GridIndex center)
         {
