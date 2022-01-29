@@ -59,23 +59,13 @@ namespace Duality.Systems
         private static void SpawnCreatures(GameElementTemplateInfo info, GridIndex gridIndex)
         {
             var spawnData = new TileEventArgs(info.GetId(), gridIndex);
-            var animalType = GenerateAnimalType.FromTextureName(info);
+            var animalType = GenerateCreatureType.FromTextureName(info);
             switch (animalType)
             {
                 case "Fish": FishSpawner.SpawnCreature(spawnData); return;
                 case "Axolotl": AxolotlSpawner.SpawnCreature(spawnData); return;
+                case "Human": HumanSpawner.SpawnCreature(spawnData); return;
             }
-            
-            if (info.SubGroupType != "Humans") return;
-            var texture = GameDriver.Instance.Editor.GetSelectedTexture();
-            if (texture == null) return;
-
-            var layerId = GameViewManager.GetLayerId(info.SubGroupType);
-            var sprite = GenerateSprite.Perform(texture);
-            sprite.Transform.Position = CalculateGridFromWorld.GetWorldPosition(gridIndex);
-            sprite.Transform.Scale = Vector2.One*2.0f;
-            sprite.Pivot = new Vector2(0.5f, 1.0f);
-            sprite.ZIndex = GlobalConfiguration.GetZIndexCreatures(layerId);
         }
 
         private void SpawnTiles(GameElementTemplateInfo info, GridIndex gridIndex)

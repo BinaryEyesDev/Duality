@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Duality.Agents; 
 using Duality.Data;
 using Duality.Extensions;
 using Duality.Utilities;
-using Microsoft.Xna.Framework.Media;
 using Orca.Logging;
 
 namespace Duality.Spawners
@@ -17,7 +15,7 @@ namespace Duality.Spawners
         public static int OverpopulationThreshold = 20;
         public static int CurrentPopulationCount => Fishes.Count;
 
-        public static void SpawnCreature(TileEventArgs data, bool rollChance = true)
+        public static void SpawnCreature(TileEventArgs data)
         {
             if (ExtinctionEventInProcess) return;
             var waterTileCount = GameDriver.Instance.World.GetWaterTileCount();

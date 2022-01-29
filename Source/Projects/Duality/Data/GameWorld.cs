@@ -1,5 +1,6 @@
 ﻿using System;
 using Duality.Components;
+using Duality.Editing;
 using Duality.Extensions;
 using Duality.Utilities;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,10 +19,12 @@ namespace Duality.Data
 
         public int GetWaterTileCount()
         {
+            var waterLayerIndex = GameViewManager.CalculateLayerIndex("Water");
             var count = 0;
             RunOnAllTiles.Perform((index, node) =>
             {
-                if (node.Layers[0] != null && node.Layers[0].Id.SubGroup == "Water")
+                var waterLayer = node.Layers[waterLayerIndex];
+                if (waterLayer is {Id: {SubGroup: "Water"}})
                     count += 1;
             });
 

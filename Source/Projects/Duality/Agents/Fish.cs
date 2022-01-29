@@ -1,5 +1,6 @@
 ﻿using Duality.Components;
 using Duality.Data;
+using Duality.Editing;
 using Duality.Extensions;
 using Duality.Spawners;
 using Duality.Utilities;
@@ -53,6 +54,8 @@ namespace Duality.Agents
         public static DirectionInfo? LookForTarget(Transform2D transform)
         {
             DirectionInfo? direction = null;
+
+            var waterLayerIndex = GameViewManager.CalculateLayerIndex("Water");
             var cellPosition = CalculateGridFromWorld.GetGridWorldPosition(transform.Position);
             var cell = CalculateGridFromWorld.GetGridIndex(cellPosition);
             var adjacentIndices = GenerateAdjacentDirectionInfos.Perform(cell);
@@ -63,7 +66,8 @@ namespace Duality.Agents
                     continue;
 
                 var adjacent = GameDriver.Instance.World[adjacentInfo.Index];
-                if (adjacent.Layers[0] == null || adjacent.Layers[0].Id.SubGroup != "Water")
+                var waterLayer = adjacent.Layers[waterLayerIndex];
+                if (waterLayer is not {Id: {SubGroup: "Water"}})
                     continue;
 
                 direction = adjacentInfo;

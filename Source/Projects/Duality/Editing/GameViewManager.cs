@@ -9,6 +9,8 @@ namespace Duality.Editing
         public static bool ShowAllLayers = true;
         public static bool ShowLayerMask = false;
         public static bool ShowGrid = false;
+        public static int CalculateLayerIndex(int layerId) => layerId - 1;
+        public static int CalculateLayerIndex(string subGroupType) => CalculateLayerIndex(FindLayerId(subGroupType));
 
         public static void SetZoomFactory(float value)
         {
@@ -21,15 +23,16 @@ namespace Duality.Editing
             return CurrentTileLayer;
         }
 
-        private static int FindLayerId(string subGroupType)
+        public static int FindLayerId(string subGroupType)
         {
             switch (subGroupType)
             {
-                case "Water": return 1;
-                case "Grass": return 2;
-                case "Nature": return 3;
-                case "Buildings": return 4;
-                case "Humans": return 5;
+                case "OceanBottom": return 1;
+                case "Water": return 2;
+                case "Grass": return 3;
+                case "Nature": return 4;
+                case "Buildings": return 6;
+                case "Humans": return 7;
                 default: return CurrentTileLayer;
             }
         }

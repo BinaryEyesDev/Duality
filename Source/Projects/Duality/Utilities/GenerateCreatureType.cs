@@ -2,7 +2,7 @@
 
 namespace Duality.Utilities
 {
-    public static class GenerateAnimalType
+    public static class GenerateCreatureType
     {
         public static string FromTextureName(GameElementTemplateInfo info)
         {
