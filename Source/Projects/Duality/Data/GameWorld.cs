@@ -10,8 +10,8 @@ namespace Duality.Data
     public class GameWorld
     {
         public string Name;
-        public event EventHandler<TileEventArgs> OnTiledPlaced;
-        public event EventHandler<TileEventArgs> OnTiledRemoved;
+        public event EventHandler<TileEventArgs> OnLayerObjectAdded;
+        public event EventHandler<TileEventArgs> OnLayerObjectRemoved;
         public GameNode this[GridIndex index] => _nodes[index.Column, index.Row];
         public GameNode GetNode(GridIndex cell) => this[cell];
         public Sprite GetCellSprite(GridIndex cell, int layerId) => this[cell].GetSprite(layerId);
@@ -21,7 +21,7 @@ namespace Duality.Data
             var count = 0;
             RunOnAllTiles.Perform((index, node) =>
             {
-                if (node.Layers[0] != null && node.Layers[0].Type.Contains("Water"))
+                if (node.Layers[0] != null && node.Layers[0].Id.SubGroup == "Water")
                     count += 1;
             });
 
@@ -31,20 +31,21 @@ namespace Duality.Data
         public void RemoveSpriteFromNode(GridIndex cell, int layerId)
         {
             Log.Message($"RemovingSpriteFromNode: cell={cell}, layer={layerId}");
-            this[cell].RemoveSprite(layerId);
+            var id = this[cell].RemoveSprite(layerId);
+            if (id.IsInvalid)
+                return;
 
-            var worldPosition = CalculateGridFromWorld.GetWorldPosition(cell);
-            OnTiledRemoved?.Invoke(this, new TileEventArgs("", cell, worldPosition, layerId));
+            OnLayerObjectRemoved?.Invoke(this, new TileEventArgs(id, cell));
         }
 
-        public void UpdateSpriteOnNode(GridIndex cell, Texture2D texture, int layerId, string type = "")
+        public void UpdateSpriteOnNode(GridIndex cell, Texture2D texture, int layerId, GameObjectId? id = null)
         {
             Log.Message($"GeneratingGameNodeSprite: cell={cell}, layer={layerId}");
+            var objectId = id ?? GameObjectId.Invalid;
             var pos = cell.ToXnaVector2()*GlobalConfiguration.TileSize;
-            this[cell].AddSprite(texture, layerId, pos, type);
+            this[cell].AddSprite(texture, layerId, pos, objectId);
 
-            var worldPosition = CalculateGridFromWorld.GetWorldPosition(cell);
-            OnTiledPlaced?.Invoke(this, new TileEventArgs(type, cell, worldPosition, layerId));
+            OnLayerObjectAdded?.Invoke(this, new TileEventArgs(objectId, cell));
         }
 
         public GameWorld()

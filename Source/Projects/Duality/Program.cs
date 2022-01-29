@@ -67,7 +67,7 @@ namespace Duality
         {
             Log.Message("GeneratingBackground");
             var sprite = GenerateSprite.Perform("Textures/Background");
-            sprite.Type = "Background";
+            sprite.Id = new GameObjectId("World", "Textures", "Background");
             sprite.Transform.Scale = Vector2.One*8.0f;
             sprite.ZIndex = GlobalConfiguration.BackgroundZIndex;
         }

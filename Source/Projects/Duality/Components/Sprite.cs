@@ -1,4 +1,5 @@
 ﻿using System;
+using Duality.Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,7 +11,7 @@ namespace Duality.Components
         public bool IsEnabled;
         public bool IsDeleted;
 
-        public string Type;
+        public GameObjectId Id;
         public Texture2D Image;
         public Vector2 Size;
         public Vector2 Pivot;

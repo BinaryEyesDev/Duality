@@ -54,8 +54,8 @@ namespace Duality.Agents
                 if (!potential.Index.IsValid) continue;
 
                 var potentialNode = GameDriver.Instance.World[potential.Index];
-                if (potentialNode.Layers[0] == null || potentialNode.Layers[0].Type != "Water") continue;
-                if (potentialNode.Layers.Any(entry => entry is {Type: "Grass"})) continue;
+                if (potentialNode.Layers[0] == null || potentialNode.Layers[0].Id.SubGroup != "Water") continue;
+                if (potentialNode.Layers.Any(entry => entry is {Id: {SubGroup: "Grass"}})) continue;
                 if (!CheckHasGrassEdgeNear(potential)) continue;
 
                 direction = potential;
@@ -71,7 +71,7 @@ namespace Duality.Agents
             foreach (var info in adjacentInfos)
             {
                 var node = GameDriver.Instance.World[info.Index];
-                var grass = node.Layers.FirstOrDefault(entry => entry is {Type: "Grass"});
+                var grass = node.Layers.FirstOrDefault(entry => entry is {Id: {SubGroup: "Grass"}});
                 if (grass == null) continue;
                 if (grass.Image.Name.Contains("5")) continue;
                 validCount += 1;

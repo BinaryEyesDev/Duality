@@ -12,6 +12,7 @@ namespace Duality.Data
         public readonly IntPtr Pointer;
         public bool IsValid => Pointer != IntPtr.Zero;
         public string TextureName => Path.GetFileNameWithoutExtension(TexturePath);
+        public GameObjectId GetId() => new(GroupType, SubGroupType, TextureName);
 
         public GameElementTemplateInfo(
             string group,

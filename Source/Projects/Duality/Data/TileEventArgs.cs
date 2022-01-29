@@ -1,4 +1,6 @@
 ﻿using System;
+using Duality.Editing;
+using Duality.Utilities;
 using Microsoft.Xna.Framework;
 
 namespace Duality.Data
@@ -6,17 +8,17 @@ namespace Duality.Data
     public class TileEventArgs
         : EventArgs
     {
-        public readonly string Type;
+        public readonly GameObjectId Id;
         public readonly GridIndex Index;
         public readonly Vector2 WorldPosition;
         public readonly int LayerId;
 
-        public TileEventArgs(string type, GridIndex index, Vector2 worldPosition, int layerId)
+        public TileEventArgs(GameObjectId id, GridIndex index)
         {
-            Type = type;
+            Id = id;
             Index = index;
-            WorldPosition = worldPosition;
-            LayerId = layerId;
+            WorldPosition = CalculateGridFromWorld.GetWorldPosition(index);
+            LayerId = GameViewManager.GetLayerId(id.SubGroup);
         }
     }
 }

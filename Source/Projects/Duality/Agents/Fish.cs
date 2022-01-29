@@ -63,7 +63,7 @@ namespace Duality.Agents
                     continue;
 
                 var adjacent = GameDriver.Instance.World[adjacentInfo.Index];
-                if (adjacent.Layers[0] == null || adjacent.Layers[0].Type != "Water")
+                if (adjacent.Layers[0] == null || adjacent.Layers[0].Id.SubGroup != "Water")
                     continue;
 
                 direction = adjacentInfo;

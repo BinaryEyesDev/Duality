@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using Duality.Components;
 using Duality.Data;
 using Duality.Editing;
+using Duality.Spawners;
 using Duality.Utilities;
+using ImGuiNET;
 using Microsoft.Xna.Framework;
 
 namespace Duality.Systems
@@ -21,12 +24,14 @@ namespace Duality.Systems
             if (MouseInput.WasButtonJustPressed(1))
             {
                 var node = driver.World[gridIndex];
-                var building = node.Layers.FirstOrDefault(entry => entry != null && entry.Type.Contains("Building"));
-                building?.FlipHorizontal();
-                if (building != null) return;
-
-                var grassTile = node.Layers.FirstOrDefault(entry => entry != null && entry.Type.Contains("Grass"));
-                grassTile?.Rotate90();
+                for (var i = node.Layers.Length - 1; i >= 0; i--)
+                {
+                    if (node.Layers[i] == null) continue;
+                    if (node.Layers[i].Id.Group == "Creatures") continue;
+                    
+                    node.Layers[i].Rotate90();
+                    break;
+                }
             }
 
             if (MouseInput.WasButtonJustPressed(0))
@@ -43,25 +48,34 @@ namespace Duality.Systems
                         SpawnCreatures(info, gridIndex); 
                         break;
 
-                    case "Tiles": 
+                    case "Tiles":
+                    case "Objects":
                         SpawnTiles(info, gridIndex); 
                         break;
                 }
             }
         }
 
-        private void SpawnCreatures(GameElementTemplateInfo info, GridIndex gridIndex)
+        private static void SpawnCreatures(GameElementTemplateInfo info, GridIndex gridIndex)
         {
+            var spawnData = new TileEventArgs(info.GetId(), gridIndex);
+            var animalType = GenerateAnimalType.FromTextureName(info);
+            switch (animalType)
+            {
+                case "Fish": FishSpawner.SpawnCreature(spawnData); return;
+                case "Axolotl": AxolotlSpawner.SpawnCreature(spawnData); return;
+            }
+            
             if (info.SubGroupType != "Humans") return;
-
-            var worldPosition = CalculateGridFromWorld.GetWorldPosition(gridIndex);
-            var layerId = GameViewManager.GetLayerId(info.SubGroupType);
             var texture = GameDriver.Instance.Editor.GetSelectedTexture();
             if (texture == null) return;
 
-            //var sprite = GenerateSprite.Perform()
-            var zIndex = GlobalConfiguration.GetZIndexCreatures(layerId);
-
+            var layerId = GameViewManager.GetLayerId(info.SubGroupType);
+            var sprite = GenerateSprite.Perform(texture);
+            sprite.Transform.Position = CalculateGridFromWorld.GetWorldPosition(gridIndex);
+            sprite.Transform.Scale = Vector2.One*2.0f;
+            sprite.Pivot = new Vector2(0.5f, 1.0f);
+            sprite.ZIndex = GlobalConfiguration.GetZIndexCreatures(layerId);
         }
 
         private void SpawnTiles(GameElementTemplateInfo info, GridIndex gridIndex)
@@ -78,7 +92,7 @@ namespace Duality.Systems
                 return;
             }
 
-            driver.World.UpdateSpriteOnNode(gridIndex, texture, layerId, subGroup);
+            driver.World.UpdateSpriteOnNode(gridIndex, texture, layerId, info.GetId());
         }
     }
 }

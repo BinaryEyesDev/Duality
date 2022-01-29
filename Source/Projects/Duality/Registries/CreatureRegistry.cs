@@ -1,5 +1,6 @@
 ﻿using Duality.Data;
 using Duality.Spawners;
+using Duality.Utilities;
 using Orca.Logging;
 
 namespace Duality.Registries
@@ -8,12 +9,12 @@ namespace Duality.Registries
     {
         public CreatureRegistry()
         {
-            GameDriver.Instance.World.OnTiledPlaced += HandleTilePlaced;
+            GameDriver.Instance.World.OnLayerObjectAdded += HandleTilePlaced;
         }
 
         private void HandleTilePlaced(object? sender, TileEventArgs args)
         {
-            switch (args.Type)
+            switch (args.Id.SubGroup)
             {
                 case "Water": SpawnWaterCreature(args); break;
                 case "Grass": SpawnGrassyCreature(args); break;
@@ -29,8 +30,11 @@ namespace Duality.Registries
         private void SpawnWaterCreature(TileEventArgs tileData)
         {
             Log.Message("SpawningWaterCreature");
-            FishSpawner.SpawnCreature(tileData);
-            AxolotlSpawner.SpawnCreature(tileData);
+            var roll = GetRandom.Float(0.0f, 100.0f);
+            if (roll > 98.0f)
+                FishSpawner.SpawnCreature(tileData);
+            else if (roll > 99.0f)
+                AxolotlSpawner.SpawnCreature(tileData);
         }
     }
 }

@@ -17,17 +17,16 @@ namespace Duality.Spawners
             if (!ValidateNearGrassEdge(data))
                 return;
 
-            if (CurrentPopulationCount == 4) 
+            if (CurrentPopulationCount == 4)
+            {
+                GameDriver.Instance.MessageDisplay.AddDireMessage("Only 4 Axolotls can exist without starving!");
                 return;
-
-            var roll = GetRandom.Float(0.0f, 100.0f);
-            if (roll < 95.0f) return;
+            }
 
             Log.Message("Spawning Axolotl");
             GameDriver.Instance.MessageDisplay.AddMessage("Spawning Axototl");
 
             var image = GameDriver.Instance.TextureRegistry.FindGameElementTemplateByName("Creatures", "Water", "Axolotl_1");
-
             var sprite = GenerateSprite.Perform(image);
             sprite.Transform.Position = data.WorldPosition;
             sprite.ZIndex = (data.LayerId * GlobalConfiguration.SpriteLayerStep) - GlobalConfiguration.SpriteLayerUnderStep;
@@ -43,7 +42,7 @@ namespace Duality.Spawners
         private static bool ValidateNearGrassEdge(TileEventArgs data)
         {
             var cell = GameDriver.Instance.World[data.Index];
-            if (cell.Layers.Any(entry => entry is {Type: "Grass"}))
+            if (cell.Layers.Any(entry => entry is {Id: {SubGroup: "Grass"}}))
                 return false;
 
             var validCount = 0;
@@ -51,7 +50,7 @@ namespace Duality.Spawners
             foreach (var info in adjacentInfos)
             {
                 var node = GameDriver.Instance.World[info.Index];
-                var grass = node.Layers.FirstOrDefault(entry => entry is { Type: "Grass" });
+                var grass = node.Layers.FirstOrDefault(entry => entry is {Id: {SubGroup: "Grass"}});
                 if (grass == null) continue;
                 if (grass.Image.Name.Contains("5")) continue;
                 validCount += 1;
