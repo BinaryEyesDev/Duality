@@ -29,7 +29,7 @@ namespace Duality.Registries
         private void SpawnWaterCreature(TileEventArgs tileData)
         {
             Log.Message("SpawningWaterCreature");
-            FishSpawner.TrySpawnFish(tileData);
+            FishSpawner.SpawnCreature(tileData);
         }
     }
 }

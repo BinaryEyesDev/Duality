@@ -21,7 +21,13 @@ namespace Duality.Components
         public event EventHandler OnEnabled;
         public event EventHandler OnDisabled;
         public Vector2 Origin => Size*Pivot;
-        
+
+        public void FlipHorizontal()
+        {
+            var contains = (Effects & SpriteEffects.FlipHorizontally) != 0;
+            Effects = contains ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        }
+
         public void Enable(bool isEnabled)
         {
             if (IsEnabled == isEnabled)

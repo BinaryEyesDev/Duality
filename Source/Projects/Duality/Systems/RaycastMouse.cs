@@ -1,7 +1,9 @@
-﻿using Duality.Components;
+﻿using System.Linq;
+using Duality.Components;
 using Duality.Editing.Windows;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
+using Orca.Logging;
 
 namespace Duality.Systems
 {
@@ -13,14 +15,22 @@ namespace Duality.Systems
             var mousePosition = MouseInput.GetScreenPosition();
             var worldPosition = Vector2.Transform(mousePosition, driver.MainCamera.Inverted);
             var gridPosition = CalculateGridFromWorld.GetGridWorldPosition(worldPosition);
-            
+            var gridIndex = CalculateGridFromWorld.GetGridIndex(gridPosition);
+
             driver.EditorMouse.Transform.Position = gridPosition;
+            if (MouseInput.WasButtonJustPressed(1))
+            {
+                var node = driver.World[gridIndex];
+                var building = node.Layers.FirstOrDefault(entry => entry != null && entry.Type.Contains("Building"));
+                if (building != null)
+                    building.FlipHorizontal();
+            }
+
             if (MouseInput.WasButtonJustPressed(0))
             {
                 if (driver.Editor.IsMouseCaptured) return;
                 if (!driver.Editor.GetSelectedElement().IsValid) return;
-
-                var gridIndex = CalculateGridFromWorld.GetGridIndex(gridPosition);
+                
                 var type = driver.Editor.GetSelectedElement().TextureType;
                 TileEditingWindow.CurrentTileLayer = DetermineTypeLayerId(type);
 
