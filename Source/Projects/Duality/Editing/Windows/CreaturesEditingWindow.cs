@@ -25,8 +25,8 @@ namespace Duality.Editing.Windows
         {
             var viewport = editor.Driver.GraphicsDevice.Viewport;
             var viewportSize = new Vector2(viewport.Width, viewport.Height);
-            var size = new Vector2(150.0f, 330.0f);
-            var pos = new Vector2(viewportSize.X - size.X, 380.0f);
+            var size = new Vector2(150.0f, 200.0f);
+            var pos = new Vector2(viewportSize.X - size.X, 420.0f);
             ImGui.SetWindowPos(pos);
             ImGui.SetWindowSize(size);
         }

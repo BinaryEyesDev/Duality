@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using Duality.Data;
-using Duality.Utilities;
 using ImGuiNET;
 
 namespace Duality.Editing.Windows
@@ -34,14 +33,13 @@ namespace Duality.Editing.Windows
                     ImGui.TreePop();
                 }
             }
-
         }
 
         private static void UpdateWindowRect(GameEditor editor)
         {
             var viewport = editor.Driver.GraphicsDevice.Viewport;
             var viewportSize = new Vector2(viewport.Width, viewport.Height);
-            var size = new Vector2(150.0f, 350.0f);
+            var size = new Vector2(150.0f, 200.0f);
             var pos = new Vector2(viewportSize.X - size.X, 220.0f);
             ImGui.SetWindowPos(pos);
             ImGui.SetWindowSize(size);
