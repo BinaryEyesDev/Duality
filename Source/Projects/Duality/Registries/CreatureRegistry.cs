@@ -30,6 +30,7 @@ namespace Duality.Registries
         {
             Log.Message("SpawningWaterCreature");
             FishSpawner.SpawnCreature(tileData);
+            AxolotlSpawner.SpawnCreature(tileData);
         }
     }
 }
