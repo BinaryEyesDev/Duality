@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography;
 using Duality.Components;
 using Duality.Data;
 using Duality.Editing;
@@ -24,6 +25,7 @@ namespace Duality
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
         public MessageDisplay MessageDisplay;
+        public GameUI UI;
 
         public GameWorld World;
         public TextureRegistry TextureRegistry;
@@ -52,24 +54,32 @@ namespace Duality
 
             MouseInput.Update();
             FrameTime.Update(gameTime);
-            for (var i = 0; i < UpdateSystems.Count; i++)
-                UpdateSystems[i].Perform(this);
 
-            for (var i = Sprites.Count - 1; i >= 0; i--)
+            if (!DestructionManager.InProcess)
             {
-                if (!Sprites[i].IsDeleted) continue;
-                Sprites.RemoveAt(i);
-            }
+                for (var i = 0; i < UpdateSystems.Count; i++)
+                    UpdateSystems[i].Perform(this);
 
-            for (var i = Agents.Count - 1; i >= 0; i--)
-            {
-                if (Agents[i].State != AgentState.Dead) continue;
-                Agents.RemoveAt(i);
-            }
+                for (var i = Sprites.Count - 1; i >= 0; i--)
+                {
+                    if (!Sprites[i].IsDeleted) continue;
+                    Sprites.RemoveAt(i);
+                }
 
-            MessageDisplay.Update();
+                for (var i = Agents.Count - 1; i >= 0; i--)
+                {
+                    if (Agents[i].State != AgentState.Dead) continue;
+                    Agents.RemoveAt(i);
+                }
+
+                MessageDisplay.Update();
+                UI.Update();
+                Editor.Update(this, gameTime);
+            }
+            else
+                DestructionManager.Update();
+
             FramerateDisplay.HandleUpdateComplete(gameTime);
-            Editor.Update(this, gameTime);
             base.Update(gameTime);
         }
 
@@ -89,7 +99,12 @@ namespace Duality
 
             MessageDisplay.Draw();
             FramerateDisplay.HandleDrawComplete();
+            UI.Draw();
             Editor.Draw(gameTime);
+
+            if (DestructionManager.InProcess)
+                DestructionManager.Draw();
+
             base.Draw(gameTime);
         }
     }

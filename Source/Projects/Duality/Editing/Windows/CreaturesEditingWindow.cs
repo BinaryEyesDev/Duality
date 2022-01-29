@@ -34,6 +34,9 @@ namespace Duality.Editing.Windows
                     ImGui.TreePop();
                 }
             }
+
+            if (ImGui.ImageButton(editor.BoomButtonIconPointer, new Vector2(125.0f, 125.0f)))
+                DestructionManager.Start();
         }
 
         private static void UpdateWindowRect(GameEditor editor)

@@ -33,6 +33,7 @@ namespace Duality
                 driver.DefaultFont = GenerateDefaultFont.Perform(driver);
                 driver.FramerateDisplay = GenerateFramerateDisplay.Perform(driver);
                 driver.MessageDisplay = new MessageDisplay(driver);
+                driver.UI = new GameUI();
 
                 driver.MainCamera = GenerateMainCamera.Perform(driver);
                 driver.World = GenerateGameWorld.Perform(driver, "Duality");
@@ -46,7 +47,8 @@ namespace Duality
                 driver.WorldGrid = GenerateWorldGrid.Perform();
                 driver.EditorMouse = GenerateEditorMouse.Perform();
                 GenerateBackground();
-                
+                DestructionManager.Initialize();
+
                 driver.UpdateSystems = GenerateUpdateSystems.Perform();
                 driver.Window.Title = $"Duality {GameVersion.Get()}";
 

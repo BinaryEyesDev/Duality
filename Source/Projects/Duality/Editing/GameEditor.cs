@@ -20,6 +20,7 @@ namespace Duality.Editing
         public ImGUIRenderer Renderer { get; }
         public GroupingInfoMap IconMap { get; }
         public bool IsMouseCaptured => _windows.Values.Any(entry => entry.IsMouseHovering);
+        public IntPtr BoomButtonIconPointer { get; private set; }
 
         public T GetEditingWindow<T>() where T : EditingWindow
         {
@@ -42,6 +43,7 @@ namespace Duality.Editing
 
         public void Dispose()
         {
+            Renderer.UnbindTexture(BoomButtonIconPointer);
             foreach (var groupEntry in IconMap)
             {
                 foreach (var subGroupEntry in groupEntry.Value)
@@ -72,6 +74,7 @@ namespace Duality.Editing
             Driver = driver;
             Renderer = new ImGUIRenderer(driver).Initialize().RebuildFontAtlas();
             IconMap = LoadTextureIcons.Perform(driver, Renderer);
+            BoomButtonIconPointer = Renderer.BindTexture(driver.Content.Load<Texture2D>("Textures/Boom"));
             AddWindow<MouseDataWindow>();
             AddWindow<WorldEditingWindow>();
             AddWindow<SelectedPreviewWindow>();
@@ -85,6 +88,7 @@ namespace Duality.Editing
             _windows.Add(typeof(T), window);
         }
 
+        private Texture2D _boomButtonTexture;
         private readonly Dictionary<Type, EditingWindow> _windows = new();
     }
 }
