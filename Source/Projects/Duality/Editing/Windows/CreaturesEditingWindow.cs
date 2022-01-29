@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Duality.Data;
 using ImGuiNET;
 
 namespace Duality.Editing.Windows

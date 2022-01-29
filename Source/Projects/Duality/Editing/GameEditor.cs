@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using Duality.Data;
 using Duality.Editing.Utilities;
 using Duality.Editing.Windows;
 using Microsoft.Xna.Framework;
@@ -84,28 +84,5 @@ namespace Duality.Editing
         }
 
         private readonly Dictionary<Type, EditingWindow> _windows = new();
-    }
-
-    public readonly struct GameElementTemplateInfo
-    {
-        public static GameElementTemplateInfo Invalid => new("", "", "", IntPtr.Zero);
-        public readonly string GroupType;
-        public readonly string SubGroupType;
-        public readonly string TexturePath;
-        public readonly IntPtr Pointer;
-        public bool IsValid => Pointer != IntPtr.Zero;
-        public string TextureName => Path.GetFileNameWithoutExtension(TexturePath);
-
-        public GameElementTemplateInfo(
-            string group,
-            string subGroup, 
-            string path, 
-            IntPtr pointer)
-        {
-            GroupType = group;
-            SubGroupType = subGroup;
-            TexturePath = path;
-            Pointer = pointer;
-        }
     }
 }

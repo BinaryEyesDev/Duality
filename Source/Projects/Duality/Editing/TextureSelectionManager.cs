@@ -1,4 +1,6 @@
-﻿namespace Duality.Editing
+﻿using Duality.Data;
+
+namespace Duality.Editing
 {
     public static class TextureSelectionManager
     {
