@@ -7,7 +7,6 @@ namespace Duality.Editing.Windows
     public class CreaturesEditingWindow
         : EditingWindow
     {
-        public static GameElementTemplateInfo CurrentlySelected = GameElementTemplateInfo.Invalid;
         public override string Id => "Creatures Editing Window";
 
         protected override void PerformPreDraw(GameEditor editor)
@@ -19,7 +18,22 @@ namespace Duality.Editing.Windows
         protected override void PerformDraw(GameEditor editor)
         {
             UpdateWindowRect(editor);
-
+            var iconMap = editor.IconMap;
+            foreach (var groupEntry in iconMap)
+            {
+                if (groupEntry.Key != "Creatures") continue;
+                foreach (var subGroupEntry in groupEntry.Value)
+                {
+                    if (!ImGui.TreeNode(subGroupEntry.Key)) continue;
+                    foreach (var entry in subGroupEntry.Value)
+                    {
+                        var pressed = ImGui.ImageButton(entry.Pointer, GlobalConfiguration.GuiTileIconSize);
+                        if (!pressed) continue;
+                        TextureSelectionManager.Set(entry);
+                    }
+                    ImGui.TreePop();
+                }
+            }
         }
 
         private static void UpdateWindowRect(GameEditor editor)
@@ -30,11 +44,6 @@ namespace Duality.Editing.Windows
             var pos = new Vector2(viewportSize.X - size.X, 420.0f);
             ImGui.SetWindowPos(pos);
             ImGui.SetWindowSize(size);
-        }
-
-        private static void HandlePressed(GameElementTemplateInfo mapping)
-        {
-            CurrentlySelected = CurrentlySelected.Pointer == mapping.Pointer ? GameElementTemplateInfo.Invalid : mapping;
         }
     }
 }

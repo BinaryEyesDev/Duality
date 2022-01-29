@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Duality.Agents; 
 using Duality.Data;
 using Duality.Extensions;
@@ -61,7 +62,8 @@ namespace Duality.Spawners
             Log.Message("Fish Extinction Event Registered");
             GameDriver.Instance.MessageDisplay.AddDireMessage("Fish Extinction Event Is Happening!");
 
-            var deathCount = GetRandom.Int32(10, CurrentPopulationCount);
+            var deathRatio = GetRandom.Float(75.0f, 95.0f);
+            var deathCount = Math.Floor(CurrentPopulationCount*deathRatio);
             while (deathCount > 0)
             {
                 Fishes.PopRandom().State = AgentState.Dying;

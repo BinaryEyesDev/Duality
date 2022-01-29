@@ -35,7 +35,9 @@ namespace Duality.Editing
         public Texture2D GetSelectedTileTexture()
         {
             var mapping = TextureSelectionManager.CurrentlySelected;
-            return !mapping.IsValid ? null : Driver.TextureRegistry.FindGameElementTemplateByPath("Tiles", mapping.SubGroupType, mapping.TexturePath);
+            return !mapping.IsValid 
+                ? null 
+                : Driver.TextureRegistry.FindGameElementTemplateByPath(mapping.GroupType, mapping.SubGroupType, mapping.TexturePath);
         }
 
         public void Dispose()

@@ -29,7 +29,7 @@ namespace Duality.Editing.Windows
                     {
                         var pressed = ImGui.ImageButton(entry.Pointer, GlobalConfiguration.GuiTileIconSize);
                         if (!pressed) continue;
-                        HandlePressed(entry);
+                        TextureSelectionManager.Set(entry);
                     }
                     ImGui.TreePop();
                 }
@@ -44,12 +44,6 @@ namespace Duality.Editing.Windows
             var pos = new Vector2(viewportSize.X - size.X, 220.0f);
             ImGui.SetWindowPos(pos);
             ImGui.SetWindowSize(size);
-        }
-
-        private static void HandlePressed(GameElementTemplateInfo mapping)
-        {
-            TextureSelectionManager.CurrentlySelected = 
-                TextureSelectionManager.CurrentlySelected.Pointer == mapping.Pointer ? GameElementTemplateInfo.Invalid : mapping;
         }
     }
 }
