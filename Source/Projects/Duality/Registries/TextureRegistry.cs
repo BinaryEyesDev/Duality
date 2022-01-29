@@ -25,7 +25,7 @@ namespace Duality.Registries
             return subGroupMap.FirstOrDefault(entry => Path.GetFileNameWithoutExtension(entry.Name) == name);
         }
 
-        private List<Texture2D> FindSubGroup(string group, string subGroup)
+        private IEnumerable<Texture2D> FindSubGroup(string group, string subGroup)
         {
             var foundGroup = Groupings.TryGetValue(group, out var groupMap);
             if (!foundGroup)
@@ -44,9 +44,8 @@ namespace Duality.Registries
             return subGroupMap;
         }
 
-        public TextureRegistry(GameDriver driver)
+        public TextureRegistry()
         {
-            _driver = driver;
             Groupings = new TileGroupingsMap
             {
                 {"Tiles", LoadTextures("Tiles")},
@@ -81,7 +80,5 @@ namespace Duality.Registries
 
             return map;
         }
-
-        private readonly GameDriver _driver;
     }
 }

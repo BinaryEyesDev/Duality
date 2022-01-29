@@ -18,18 +18,19 @@ namespace Duality.Editing.Windows
         protected override void PerformDraw(GameEditor editor)
         {
             UpdateWindowRect(editor);
-            var icons = editor.TextureIcons;
-            foreach (var (objectType, mappingList) in icons)
+            var iconMap = editor.IconMap;
+            foreach (var groupEntry in iconMap)
             {
-                if (ImGui.TreeNode(objectType))
+                if (groupEntry.Key == "Creatures") continue;
+                foreach (var subGroupEntry in groupEntry.Value)
                 {
-                    foreach (var mapping in mappingList)
+                    if (!ImGui.TreeNode(subGroupEntry.Key)) continue;
+                    foreach (var entry in subGroupEntry.Value)
                     {
-                        var pressed = ImGui.ImageButton(mapping.Pointer, GlobalConfiguration.GuiTileIconSize);
-                        if (pressed)
-                            HandlePressed(mapping);
+                        var pressed = ImGui.ImageButton(entry.Pointer, GlobalConfiguration.GuiTileIconSize);
+                        if (!pressed) continue;
+                        HandlePressed(entry);
                     }
-                    
                     ImGui.TreePop();
                 }
             }

@@ -4,33 +4,36 @@ using MonoGame.ImGui.Standard;
 
 namespace Duality.Editing.Utilities
 {
-    using TextureMappingMap = Dictionary<string, List<GameElementTemplateInfo>>;
-    using TextureMap = Dictionary<string, List<Texture2D>>;
+    using GroupingInfoMap = Dictionary<string, Dictionary<string, List<GameElementTemplateInfo>>>;
+    using SubGroupInfoMap = Dictionary<string, List<GameElementTemplateInfo>>;
 
     public static class LoadTextureIcons
     {
-        public static TextureMappingMap Perform(GameDriver driver, ImGUIRenderer renderer)
+        public static GroupingInfoMap Perform(GameDriver driver, ImGUIRenderer renderer)
         {
-            var map = new TextureMappingMap();
-            GenerateIcons(map, renderer, driver.TextureRegistry.Groupings["Tiles"]);
-            GenerateIcons(map, renderer, driver.TextureRegistry.Groupings["Objects"]);
+            var map = new GroupingInfoMap();
+            foreach (var groupEntry in driver.TextureRegistry.Groupings)
+            {
+                var groupType = groupEntry.Key;
+                var subGroupInfoMap = new SubGroupInfoMap();
+                foreach (var subGroupEntry in groupEntry.Value)
+                {
+                    var subGroupInfoList = new List<GameElementTemplateInfo>();
+                    var subGroupType = subGroupEntry.Key;
+                    var subGroupList = subGroupEntry.Value;
+                    foreach (var entry in subGroupList)
+                    {
+                        var elementInfo = new GameElementTemplateInfo(groupType, subGroupType, entry.Name, renderer.BindTexture(entry));
+                        subGroupInfoList.Add(elementInfo);
+                    }
+
+                    subGroupInfoMap.Add(subGroupType, subGroupInfoList);
+                }
+
+                map.Add(groupType, subGroupInfoMap);
+            }
 
             return map;
-        }
-
-        private static void GenerateIcons(TextureMappingMap map, ImGUIRenderer renderer, TextureMap textures)
-        {
-            foreach (var (typeName, textureList) in textures)
-            {
-                if (!map.ContainsKey(typeName))
-                    map.Add(typeName, new List<GameElementTemplateInfo>());
-
-                foreach (var entry in textureList)
-                {
-                    var mapping = new GameElementTemplateInfo(typeName, entry.Name, renderer.BindTexture(entry));
-                    map[typeName].Add(mapping);
-                }
-            }
         }
     }
 }

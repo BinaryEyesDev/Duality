@@ -36,7 +36,7 @@ namespace Duality
 
                 driver.MainCamera = GenerateMainCamera.Perform(driver);
                 driver.World = GenerateGameWorld.Perform(driver, "Duality");
-                driver.TextureRegistry = GenerateTextureRegistry.Perform(driver);
+                driver.TextureRegistry = GenerateTextureRegistry.Perform();
                 driver.CreatureRegistry = GenerateCreatureRegistry.Perform(driver);
                 driver.Sprites = new List<Sprite>();
                 driver.Agents = new List<IAgent>();

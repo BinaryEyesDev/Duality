@@ -5,10 +5,10 @@ namespace Duality.Utilities
 {
     public static class GenerateTextureRegistry
     {
-        public static TextureRegistry Perform(GameDriver driver)
+        public static TextureRegistry Perform()
         {
             Log.Message("GeneratingTextureRegistry");
-            return new TextureRegistry(driver);
+            return new TextureRegistry();
         }
     }
 }

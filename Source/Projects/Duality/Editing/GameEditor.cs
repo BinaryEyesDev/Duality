@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Duality.Editing.Utilities;
 using Duality.Editing.Windows;
@@ -9,12 +10,15 @@ using MonoGame.ImGui.Standard;
 
 namespace Duality.Editing
 {
+    using GroupingInfoMap = Dictionary<string, Dictionary<string, List<GameElementTemplateInfo>>>;
+    using SubGroupInfoMap = Dictionary<string, List<GameElementTemplateInfo>>;
+
     public class GameEditor
         : IDisposable
     {
         public GameDriver Driver { get; }
         public ImGUIRenderer Renderer { get; }
-        public Dictionary<string, List<GameElementTemplateInfo>> TextureIcons { get; }
+        public GroupingInfoMap IconMap { get; }
         public bool IsMouseCaptured => _windows.Values.Any(entry => entry.IsMouseHovering);
 
         public T GetEditingWindow<T>() where T : EditingWindow
@@ -36,10 +40,13 @@ namespace Duality.Editing
 
         public void Dispose()
         {
-            foreach (var (_, mappingList) in TextureIcons)
+            foreach (var groupEntry in IconMap)
             {
-                foreach (var mapping in mappingList)
-                    Renderer.UnbindTexture(mapping.Pointer);
+                foreach (var subGroupEntry in groupEntry.Value)
+                {
+                    foreach (var entry in subGroupEntry.Value)
+                        Renderer.UnbindTexture(entry.Pointer);
+                }
             }
         }
 
@@ -62,7 +69,7 @@ namespace Duality.Editing
         {
             Driver = driver;
             Renderer = new ImGUIRenderer(driver).Initialize().RebuildFontAtlas();
-            TextureIcons = LoadTextureIcons.Perform(driver, Renderer);
+            IconMap = LoadTextureIcons.Perform(driver, Renderer);
             AddWindow<MouseDataWindow>();
             AddWindow<WorldEditingWindow>();
             AddWindow<SelectedPreviewWindow>();
@@ -81,16 +88,23 @@ namespace Duality.Editing
 
     public readonly struct GameElementTemplateInfo
     {
-        public static GameElementTemplateInfo Invalid => new("", "", IntPtr.Zero);
+        public static GameElementTemplateInfo Invalid => new("", "", "", IntPtr.Zero);
+        public readonly string GroupType;
         public readonly string SubGroupType;
         public readonly string TexturePath;
         public readonly IntPtr Pointer;
         public bool IsValid => Pointer != IntPtr.Zero;
+        public string TextureName => Path.GetFileNameWithoutExtension(TexturePath);
 
-        public GameElementTemplateInfo(string textureType, string textureName, IntPtr pointer)
+        public GameElementTemplateInfo(
+            string group,
+            string subGroup, 
+            string path, 
+            IntPtr pointer)
         {
-            SubGroupType = textureType;
-            TexturePath = textureName;
+            GroupType = group;
+            SubGroupType = subGroup;
+            TexturePath = path;
             Pointer = pointer;
         }
     }
