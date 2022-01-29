@@ -14,8 +14,11 @@ namespace Duality.Components
         {
             if (_messageQueue.TryPeek(out var queuedMessage))
             {
-                if (queuedMessage.Text == text) 
+                if (queuedMessage.Text == text)
+                {
+                    queuedMessage.Count += 1;
                     return;
+                }
             }
 
             var viewport = _driver.GraphicsDevice.Viewport;
@@ -53,7 +56,7 @@ namespace Duality.Components
         private void TryGenerateMessage(float elapsed)
         {
             var viewport = _driver.GraphicsDevice.Viewport;
-            var minimumHeight = viewport.Height - 50.0f;
+            var minimumHeight = viewport.Height - 40.0f;
 
             if (_activeMessages.Count > 0 && _activeMessages[^1].Position.Y > minimumHeight)
                 return;
@@ -70,7 +73,7 @@ namespace Duality.Components
 
             var font = _driver.DefaultFont;
             foreach (var message in _activeMessages)
-                _renderer.DrawString(font, message.Text, message.Position, message.Tint, 0.0f, Vector2.Zero, Vector2.One*1.15f, SpriteEffects.None, 0.5f);
+                _renderer.DrawString(font, message.Msg, message.Position, message.Tint, 0.0f, Vector2.Zero, Vector2.One*1.15f, SpriteEffects.None, 0.5f);
 
             _renderer.End();
         }
@@ -93,11 +96,14 @@ namespace Duality.Components
         public readonly string Text;
         public Vector2 Position;
         public Color Tint;
+        public int Count;
+        public string Msg => (Count == 1) ? Text : $"{Text} (x{Count})";
 
         public Message(string text)
         {
             Text = text;
             Tint = Color.White;
+            Count = 1;
         }
     }
 }
