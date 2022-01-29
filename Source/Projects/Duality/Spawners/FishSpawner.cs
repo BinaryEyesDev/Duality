@@ -11,7 +11,7 @@ namespace Duality.Spawners
     {
         public static readonly List<Fish> Fishes = new();
         public static bool ExtinctionEventInProcess;
-        public static int OverpopulationThreshold = 4;
+        public static int OverpopulationThreshold = 40;
         public static int CurrentPopulationCount => Fishes.Count;
 
         public static void TrySpawnFish(TileEventArgs data)

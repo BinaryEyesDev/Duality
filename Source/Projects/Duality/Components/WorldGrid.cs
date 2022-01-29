@@ -39,7 +39,7 @@ namespace Duality.Components
             _image.SetData(new[]{Color.White});
 
             _imageSize = new Vector2(_image.Width, _image.Height);
-            _scale = new Vector2(1.5f, _tileSize.Y*GlobalConfiguration.MapSize.Y);
+            _scale = new Vector2(4.0f, _tileSize.Y*GlobalConfiguration.MapSize.Y);
             _pivot = new Vector2(0.5f, 1.0f);
             _origin = _imageSize*_pivot;
             _tint = Color.White;
