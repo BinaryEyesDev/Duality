@@ -12,7 +12,7 @@ namespace Duality.Editing.Windows
         public static int CurrentTileLayer = 1;
         public static float CameraZoomFactor = 1.0f;
         public static bool ShowAllLayers = true;
-        public static bool ShowLayerMask = true;
+        public static bool ShowLayerMask = false;
         public static bool ShowGrid = false;
         public override string Id => "Tile Editing Window";
 

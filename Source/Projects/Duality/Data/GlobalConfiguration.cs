@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using NuVector2 = System.Numerics.Vector2;
 
-
 namespace Duality.Data
 {
     public static class GlobalConfiguration

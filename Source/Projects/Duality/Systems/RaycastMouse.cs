@@ -3,7 +3,6 @@ using Duality.Components;
 using Duality.Editing.Windows;
 using Duality.Utilities;
 using Microsoft.Xna.Framework;
-using Orca.Logging;
 
 namespace Duality.Systems
 {
@@ -22,8 +21,7 @@ namespace Duality.Systems
             {
                 var node = driver.World[gridIndex];
                 var building = node.Layers.FirstOrDefault(entry => entry != null && entry.Type.Contains("Building"));
-                if (building != null)
-                    building.FlipHorizontal();
+                building?.FlipHorizontal();
             }
 
             if (MouseInput.WasButtonJustPressed(0))

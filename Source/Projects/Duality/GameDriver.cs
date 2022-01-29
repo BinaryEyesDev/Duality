@@ -23,6 +23,7 @@ namespace Duality
         public SpriteBatch SpriteBatch;
         public SpriteFont DefaultFont;
         public FramerateDisplay FramerateDisplay;
+        public MessageDisplay MessageDisplay;
 
         public GameWorld World;
         public TextureRegistry TextureRegistry;
@@ -37,8 +38,7 @@ namespace Duality
         public Player Player;
         public WorldGrid WorldGrid;
         public EditorMouse EditorMouse;
-        
-        
+
         public List<GameSystem> UpdateSystems;
         public GameEditor Editor;
         public GameDriver() => Instance = this;
@@ -67,6 +67,7 @@ namespace Duality
                 Agents.RemoveAt(i);
             }
 
+            MessageDisplay.Update();
             FramerateDisplay.HandleUpdateComplete(gameTime);
             Editor.Update(this, gameTime);
             base.Update(gameTime);
@@ -86,6 +87,7 @@ namespace Duality
             WorldGrid.Draw(this);
             SpriteBatch.End();
 
+            MessageDisplay.Draw();
             FramerateDisplay.HandleDrawComplete();
             Editor.Draw(gameTime);
             base.Draw(gameTime);
