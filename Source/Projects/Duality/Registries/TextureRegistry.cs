@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework.Graphics;
 using Orca.Logging;
 
@@ -13,9 +12,6 @@ namespace Duality.Registries
     public class TextureRegistry
     {
         public TileGroupingsMap Groupings;
-        public readonly TextureMap Tiles;
-        public readonly TextureMap Creatures;
-        public readonly TextureMap Objects;
 
         public Texture2D FindGameElementTemplateByPath(string group, string subGroup, string path)
         {
@@ -48,24 +44,6 @@ namespace Duality.Registries
             return subGroupMap;
         }
 
-        //public Texture2D FindCreature(string type, string name)
-        //{
-        //    var typeFound = Creatures.TryGetValue(type, out var textures);
-        //    return typeFound ? textures.FirstOrDefault(entry => Path.GetFileNameWithoutExtension(entry.Name) == name) : null;
-        //}
-
-        //public Texture2D FindObject(string type, string name)
-        //{
-        //    var typeFound = Objects.TryGetValue(type, out var textures);
-        //    return typeFound ? textures.FirstOrDefault(entry => entry.Name == name) : null;
-        //}
-
-        //public Texture2D FindTile(string type, string name)
-        //{
-        //    var typeFound = Tiles.TryGetValue(type, out var textures);
-        //    return typeFound ? textures.FirstOrDefault(entry => entry.Name == name) : null;
-        //}
-
         public TextureRegistry(GameDriver driver)
         {
             _driver = driver;
@@ -75,10 +53,6 @@ namespace Duality.Registries
                 {"Objects", LoadTextures("Objects")},
                 {"Creatures", LoadTextures("Creatures")}
             };
-
-            //Tiles = LoadTextures("Tiles");
-            //Creatures = LoadTextures("Creatures");
-            //Objects = LoadTextures("Objects");
         }
 
         private static TextureMap LoadTextures(string objectType)
